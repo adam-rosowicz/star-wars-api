@@ -6,6 +6,7 @@ import { createLogger, restrictFromProduction } from "@tshio/logger";
 import { AppConfig } from "../config/app";
 import { cacheClient } from "../tools/cache-client";
 import { createRouter } from "../app/router";
+import { starWarsApiConfig } from "../config/star-wars-api";
 
 export async function registerCommonDependencies(appConfig: AppConfig, container: AwilixContainer) {
   await cacheClient.connect();
@@ -16,6 +17,7 @@ export async function registerCommonDependencies(appConfig: AppConfig, container
     logger: asValue(createLogger(process.env, ["accessToken", "refreshToken"])),
     cacheClient: asValue(cacheClient),
     appConfig: asValue(appConfig),
+    starWarsApiConfig: asValue(starWarsApiConfig),
     router: asFunction(createRouter).singleton(),
     queryBus: asClass(QueryBus).classic().singleton(),
     commandBus: asClass(CommandBus).classic().singleton(),
