@@ -1,4 +1,6 @@
-schema: ./graphql/schema.gql
+schema:
+  - ./graphql/schema.gql:
+      skipGraphQLImport: false
 generates:
   ./src/graphql/types/index.ts:
     plugins:

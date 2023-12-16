@@ -13,6 +13,7 @@ import { registerCommandHandlers } from "./container/command-handlers";
 import { registerRouting } from "./container/routing";
 import { registerSubscribers } from "./container/subscribers";
 import { registerGraphQLDependencies } from "./container/graphql";
+import { registerClients } from "./container/clients";
 
 loadEnvs();
 
@@ -36,6 +37,7 @@ export async function createContainer(dependencies?: ContainerDependencies): Pro
   await registerGraphQLDependencies(container);
   await registerSubscribers(container);
   await registerDatabase(container, dependencies);
+  await registerClients(container)
 
   container.register({
     app: asFunction(createApp).singleton(),

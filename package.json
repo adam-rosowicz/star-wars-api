@@ -30,9 +30,6 @@
   },
   "keywords": [],
   "author": "",
-  "engines": {
-    "node": "20"
-  },
   "dependencies": {
     "@apollo/server": "^4.9.4",
     "@tshio/awilix-resolver": "^2.0.1",

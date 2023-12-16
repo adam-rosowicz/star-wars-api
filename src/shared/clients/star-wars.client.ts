@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from "axios";
 import { StarWarsApiConfig } from "../../config/star-wars-api";
 import { HttpError } from "../../errors/http.error";
 
-type StarWarsFilm = {
+export type StarWarsFilm = {
   title: string;
   episode_id: string;
   opening_crawl: string;
@@ -45,9 +45,13 @@ export class StarWarsClient {
     });
   }
 
-  public async getFilms() {
+  public async getFilms(filter?: string) {
     try {
-      const { data } = await this.client.get<StarWarsFilmsResponse>("/films");
+      let path = "/films";
+      if (filter && filter !== "") {
+        path += `?search=${filter}`;
+      }
+      const { data } = await this.client.get<StarWarsFilmsResponse>(path);
 
       return data;
     } catch (error: any) {
