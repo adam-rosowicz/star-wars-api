@@ -1,4 +1,4 @@
-ARG IMAGE=node:20-alpine
+ARG IMAGE=node:18.12-alpine
 FROM $IMAGE as builder
 
 WORKDIR /app
@@ -22,10 +22,6 @@ RUN npm ci && npm cache clean --force && \
 
 COPY . .
 RUN npm run build
-
-#FOR SWC TRANSPILATION
-# RUN npm run build-swc
-# COPY package.json ./build/package.json
 
 COPY .env.dist ./build/.env.dist
 COPY ./swagger ./swagger
