@@ -1,5 +1,16 @@
 # import * from './parts/film.gql'
 
+enum CacheControlScope {
+    PUBLIC
+    PRIVATE
+  }
+
+directive @cacheControl(
+    maxAge: Int
+    scope: CacheControlScope
+    inheritMaxAge: Boolean
+  ) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION
+
 type FilmsCollection {
     items: [Film]!
     total: Int!
@@ -26,5 +37,5 @@ type Query {
   """
   Returns all films.
   """
-  getFilms(filter: String): FilmsCollection
+  getFilms(filter: String): FilmsCollection @cacheControl(maxAge: 240)
 }

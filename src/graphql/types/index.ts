@@ -15,6 +15,11 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export enum CacheControlScope {
+  Private = 'PRIVATE',
+  Public = 'PUBLIC'
+}
+
 export type Film = {
   __typename?: 'Film';
   characters: Array<Maybe<Scalars['String']['output']>>;
@@ -122,6 +127,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  CacheControlScope: CacheControlScope;
   Film: ResolverTypeWrapper<Film>;
   FilmsCollection: ResolverTypeWrapper<FilmsCollection>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
@@ -138,6 +144,14 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars['String']['output'];
 };
+
+export type CacheControlDirectiveArgs = {
+  inheritMaxAge?: Maybe<Scalars['Boolean']['input']>;
+  maxAge?: Maybe<Scalars['Int']['input']>;
+  scope?: Maybe<CacheControlScope>;
+};
+
+export type CacheControlDirectiveResolver<Result, Parent, ContextType = any, Args = CacheControlDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type FilmResolvers<ContextType = any, ParentType extends ResolversParentTypes['Film'] = ResolversParentTypes['Film']> = {
   characters?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
@@ -173,3 +187,6 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
 };
 
+export type DirectiveResolvers<ContextType = any> = {
+  cacheControl?: CacheControlDirectiveResolver<any, any, ContextType>;
+};

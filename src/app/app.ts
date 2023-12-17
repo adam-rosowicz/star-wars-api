@@ -1,6 +1,9 @@
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
+import Keyv from "keyv";
+import responseCachePlugin from "@apollo/server-plugin-response-cache";
+import { KeyvAdapter } from "@apollo/utils.keyvadapter";
 import { ApolloServer } from "@apollo/server";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { expressMiddleware } from "@apollo/server/express4";
@@ -42,7 +45,10 @@ async function createApp({
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      responseCachePlugin({ cache: new KeyvAdapter(new Keyv(appConfig.redisUrl)) }),
+    ],
   });
   await apolloServer.start();
 
