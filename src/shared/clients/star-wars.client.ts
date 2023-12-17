@@ -38,8 +38,31 @@ export type StarWarsSpecie = {
   edited: string;
 };
 
+export type StarWarsVehicle = {
+  name: string;
+  model: string;
+  vehicle_class: string;
+  manufacturer: string;
+  length: string;
+  cost_in_credits: string;
+  crew: string;
+  passengers: string;
+  max_atmosphering_speed: string;
+  cargo_capacity: string;
+  consumables?: string; // Assuming it's optional
+  films: string[]; // Assuming Film URL Resources are strings
+  pilots: string[]; // Assuming People URL Resources are strings
+  url: string;
+  created: string;
+  edited: string;
+};
+
 interface StarWarsSpeciesResponse extends StarWarsResponse {
   results: StarWarsSpecie[];
+}
+
+interface StarWarsVehiclesResponse extends StarWarsResponse {
+  results: StarWarsVehicle[];
 }
 
 interface StarWarsResponse {
@@ -111,6 +134,39 @@ export class StarWarsClient {
       return result;
     } catch (error: any) {
       this.dependencies.logger.error("Could not get species");
+
+      this.dependencies.logger.debug(`Error: ${JSON.stringify(error, null, 2)}`);
+
+      if (error?.response?.data) {
+        throw new HttpError(error.response.data.message, error.response.data.status);
+      }
+
+      throw error;
+    }
+  }
+
+  public async getVehicles(filter?: string) {
+    try {
+      let path = "/vehicles";
+      if (filter && filter !== "") {
+        path += `?search=${filter}`;
+      }
+      const result: StarWarsVehicle[] = [];
+      let nextUrl: string | null = path;
+
+      while (nextUrl) {
+        // eslint-disable-next-line no-await-in-loop
+        const { data }: { data: StarWarsVehiclesResponse } = await this.client.get<StarWarsVehiclesResponse>(nextUrl);
+        result.push(...data.results);
+
+        const nextPageNumber: string | undefined = data.next?.charAt(data.next.length - 1) ?? undefined;
+
+        nextUrl = nextPageNumber ? `${path}?page=${nextPageNumber}` : null;
+      }
+
+      return result;
+    } catch (error: any) {
+      this.dependencies.logger.error("Could not get vehicles");
 
       this.dependencies.logger.debug(`Error: ${JSON.stringify(error, null, 2)}`);
 

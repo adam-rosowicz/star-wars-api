@@ -21,6 +21,11 @@ type FilmsCollection {
     total: Int!
 }
 
+type VehiclesCollection {
+    items: [Vehicle]!
+    total: Int!
+}
+
 type Specie @cacheControl(maxAge: 86400){
   name: String!
   classification: String!
@@ -55,13 +60,36 @@ type Film @cacheControl(maxAge: 86400){
   url: String!
 }
 
+type Vehicle @cacheControl(maxAge: 86400) {
+  name: String!
+  model: String!
+  vehicle_class: String!
+  manufacturer: String!
+  length: String!
+  cost_in_credits: String!
+  crew: String!
+  passengers: String!
+  max_atmosphering_speed: String!
+  cargo_capacity: String!
+  consumables: String
+  films: [String!]!
+  pilots: [String!]!
+  url: String!
+  created: String!
+  edited: String!
+}
+
 type Query {
   """
   Returns all films.
   """
   getFilms(filter: String): FilmsCollection @cacheControl(maxAge: 86400)
-    """
+  """
   Returns all species.
   """
   getSpecies(filter: String): SpeciesCollection @cacheControl(maxAge: 86400)
+  """
+  Returns all vehicles.
+  """
+  getVehicles(filter: String): VehiclesCollection @cacheControl(maxAge: 86400)
 }

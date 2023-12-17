@@ -50,6 +50,8 @@ export type Query = {
   getFilms?: Maybe<FilmsCollection>;
   /** Returns all species. */
   getSpecies?: Maybe<SpeciesCollection>;
+  /** Returns all vehicles. */
+  getVehicles?: Maybe<VehiclesCollection>;
 };
 
 
@@ -59,6 +61,11 @@ export type QueryGetFilmsArgs = {
 
 
 export type QueryGetSpeciesArgs = {
+  filter?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetVehiclesArgs = {
   filter?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -83,6 +90,32 @@ export type Specie = {
 export type SpeciesCollection = {
   __typename?: 'SpeciesCollection';
   items: Array<Maybe<Specie>>;
+  total: Scalars['Int']['output'];
+};
+
+export type Vehicle = {
+  __typename?: 'Vehicle';
+  cargo_capacity: Scalars['String']['output'];
+  consumables?: Maybe<Scalars['String']['output']>;
+  cost_in_credits: Scalars['String']['output'];
+  created: Scalars['String']['output'];
+  crew: Scalars['String']['output'];
+  edited: Scalars['String']['output'];
+  films: Array<Scalars['String']['output']>;
+  length: Scalars['String']['output'];
+  manufacturer: Scalars['String']['output'];
+  max_atmosphering_speed: Scalars['String']['output'];
+  model: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  passengers: Scalars['String']['output'];
+  pilots: Array<Scalars['String']['output']>;
+  url: Scalars['String']['output'];
+  vehicle_class: Scalars['String']['output'];
+};
+
+export type VehiclesCollection = {
+  __typename?: 'VehiclesCollection';
+  items: Array<Maybe<Vehicle>>;
   total: Scalars['Int']['output'];
 };
 
@@ -166,6 +199,8 @@ export type ResolversTypes = {
   Specie: ResolverTypeWrapper<Specie>;
   SpeciesCollection: ResolverTypeWrapper<SpeciesCollection>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
+  Vehicle: ResolverTypeWrapper<Vehicle>;
+  VehiclesCollection: ResolverTypeWrapper<VehiclesCollection>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -178,6 +213,8 @@ export type ResolversParentTypes = {
   Specie: Specie;
   SpeciesCollection: SpeciesCollection;
   String: Scalars['String']['output'];
+  Vehicle: Vehicle;
+  VehiclesCollection: VehiclesCollection;
 };
 
 export type CacheControlDirectiveArgs = {
@@ -215,6 +252,7 @@ export type FilmsCollectionResolvers<ContextType = any, ParentType extends Resol
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getFilms?: Resolver<Maybe<ResolversTypes['FilmsCollection']>, ParentType, ContextType, Partial<QueryGetFilmsArgs>>;
   getSpecies?: Resolver<Maybe<ResolversTypes['SpeciesCollection']>, ParentType, ContextType, Partial<QueryGetSpeciesArgs>>;
+  getVehicles?: Resolver<Maybe<ResolversTypes['VehiclesCollection']>, ParentType, ContextType, Partial<QueryGetVehiclesArgs>>;
 };
 
 export type SpecieResolvers<ContextType = any, ParentType extends ResolversParentTypes['Specie'] = ResolversParentTypes['Specie']> = {
@@ -241,12 +279,40 @@ export type SpeciesCollectionResolvers<ContextType = any, ParentType extends Res
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type VehicleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Vehicle'] = ResolversParentTypes['Vehicle']> = {
+  cargo_capacity?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  consumables?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  cost_in_credits?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  created?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  crew?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  edited?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  films?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  length?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  manufacturer?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  max_atmosphering_speed?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  model?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  passengers?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  pilots?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  vehicle_class?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type VehiclesCollectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['VehiclesCollection'] = ResolversParentTypes['VehiclesCollection']> = {
+  items?: Resolver<Array<Maybe<ResolversTypes['Vehicle']>>, ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
   Film?: FilmResolvers<ContextType>;
   FilmsCollection?: FilmsCollectionResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Specie?: SpecieResolvers<ContextType>;
   SpeciesCollection?: SpeciesCollectionResolvers<ContextType>;
+  Vehicle?: VehicleResolvers<ContextType>;
+  VehiclesCollection?: VehiclesCollectionResolvers<ContextType>;
 };
 
 export type DirectiveResolvers<ContextType = any> = {
