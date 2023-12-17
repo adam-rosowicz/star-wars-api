@@ -11,12 +11,34 @@ directive @cacheControl(
     inheritMaxAge: Boolean
   ) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION
 
+type SpeciesCollection {
+  items: [Specie]!
+  total: Int!
+}
+
 type FilmsCollection {
     items: [Film]!
     total: Int!
 }
 
-type Film {
+type Specie @cacheControl(maxAge: 86400){
+  name: String!
+  classification: String!
+  designation: String!
+  average_height: String!
+  skin_colors: String!
+  eye_colors: String!
+  hair_colors: String!
+  homeworld: String!
+  language: String!
+  people: [String]!
+  films: [String]!
+  created: String!
+  edited: String!
+  url: String!
+}
+
+type Film @cacheControl(maxAge: 86400){
   title: String!
   episode_id: String!
   opening_crawl: String!
@@ -37,5 +59,9 @@ type Query {
   """
   Returns all films.
   """
-  getFilms(filter: String): FilmsCollection @cacheControl(maxAge: 240)
+  getFilms(filter: String): FilmsCollection @cacheControl(maxAge: 86400)
+    """
+  Returns all species.
+  """
+  getSpecies(filter: String): SpeciesCollection @cacheControl(maxAge: 86400)
 }

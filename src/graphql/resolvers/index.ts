@@ -2,6 +2,7 @@ import { CommandBus } from "@tshio/command-bus";
 import { QueryBus } from "@tshio/query-bus";
 import { Resolvers } from "../types";
 import { getFilmsQuery } from "../../app/features/film/graphql/queries/get-films.query";
+import { getSpeciesQuery } from "../../app/features/species/graphql/queries/get-species.query";
 // QUERY_IMPORTS
 // MUTATION_IMPORTS
 
@@ -20,6 +21,7 @@ export const createResolvers = (_dependencies: ResolversDependencies): Resolvers
   return {
     Query: {
       getFilms: getFilmsQuery,
+      getSpecies: getSpeciesQuery,
       // GRAPHQL_QUERIES
     },
   };

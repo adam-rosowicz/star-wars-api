@@ -48,11 +48,42 @@ export type Query = {
   __typename?: 'Query';
   /** Returns all films. */
   getFilms?: Maybe<FilmsCollection>;
+  /** Returns all species. */
+  getSpecies?: Maybe<SpeciesCollection>;
 };
 
 
 export type QueryGetFilmsArgs = {
   filter?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetSpeciesArgs = {
+  filter?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Specie = {
+  __typename?: 'Specie';
+  average_height: Scalars['String']['output'];
+  classification: Scalars['String']['output'];
+  created: Scalars['String']['output'];
+  designation: Scalars['String']['output'];
+  edited: Scalars['String']['output'];
+  eye_colors: Scalars['String']['output'];
+  films: Array<Maybe<Scalars['String']['output']>>;
+  hair_colors: Scalars['String']['output'];
+  homeworld: Scalars['String']['output'];
+  language: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  people: Array<Maybe<Scalars['String']['output']>>;
+  skin_colors: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type SpeciesCollection = {
+  __typename?: 'SpeciesCollection';
+  items: Array<Maybe<Specie>>;
+  total: Scalars['Int']['output'];
 };
 
 
@@ -132,6 +163,8 @@ export type ResolversTypes = {
   FilmsCollection: ResolverTypeWrapper<FilmsCollection>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Query: ResolverTypeWrapper<{}>;
+  Specie: ResolverTypeWrapper<Specie>;
+  SpeciesCollection: ResolverTypeWrapper<SpeciesCollection>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
 };
 
@@ -142,6 +175,8 @@ export type ResolversParentTypes = {
   FilmsCollection: FilmsCollection;
   Int: Scalars['Int']['output'];
   Query: {};
+  Specie: Specie;
+  SpeciesCollection: SpeciesCollection;
   String: Scalars['String']['output'];
 };
 
@@ -179,12 +214,39 @@ export type FilmsCollectionResolvers<ContextType = any, ParentType extends Resol
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getFilms?: Resolver<Maybe<ResolversTypes['FilmsCollection']>, ParentType, ContextType, Partial<QueryGetFilmsArgs>>;
+  getSpecies?: Resolver<Maybe<ResolversTypes['SpeciesCollection']>, ParentType, ContextType, Partial<QueryGetSpeciesArgs>>;
+};
+
+export type SpecieResolvers<ContextType = any, ParentType extends ResolversParentTypes['Specie'] = ResolversParentTypes['Specie']> = {
+  average_height?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  classification?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  created?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  designation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  edited?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  eye_colors?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  films?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  hair_colors?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  homeworld?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  language?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  people?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  skin_colors?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type SpeciesCollectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['SpeciesCollection'] = ResolversParentTypes['SpeciesCollection']> = {
+  items?: Resolver<Array<Maybe<ResolversTypes['Specie']>>, ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
   Film?: FilmResolvers<ContextType>;
   FilmsCollection?: FilmsCollectionResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Specie?: SpecieResolvers<ContextType>;
+  SpeciesCollection?: SpeciesCollectionResolvers<ContextType>;
 };
 
 export type DirectiveResolvers<ContextType = any> = {

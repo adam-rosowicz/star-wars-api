@@ -20,6 +20,28 @@ export type StarWarsFilm = {
   url: string;
 };
 
+export type StarWarsSpecie = {
+  name: string;
+  classification: string;
+  designation: string;
+  average_height: string;
+  average_lifespan: string;
+  eye_colors: string;
+  hair_colors: string;
+  skin_colors: string;
+  language: string;
+  homeworld: string;
+  people: string[];
+  films: string[];
+  url: string;
+  created: string;
+  edited: string;
+};
+
+interface StarWarsSpeciesResponse extends StarWarsResponse {
+  results: StarWarsSpecie[];
+}
+
 interface StarWarsResponse {
   count: number;
   next: string | null;
@@ -53,9 +75,42 @@ export class StarWarsClient {
       }
       const { data } = await this.client.get<StarWarsFilmsResponse>(path);
 
-      return data;
+      return data.results;
     } catch (error: any) {
       this.dependencies.logger.error("Could not get films");
+
+      this.dependencies.logger.debug(`Error: ${JSON.stringify(error, null, 2)}`);
+
+      if (error?.response?.data) {
+        throw new HttpError(error.response.data.message, error.response.data.status);
+      }
+
+      throw error;
+    }
+  }
+
+  public async getSpecies(filter?: string) {
+    try {
+      let path = "/species";
+      if (filter && filter !== "") {
+        path += `?search=${filter}`;
+      }
+      const result: StarWarsSpecie[] = [];
+      let nextUrl: string | null = path;
+
+      while (nextUrl) {
+        // eslint-disable-next-line no-await-in-loop
+        const { data }: { data: StarWarsSpeciesResponse } = await this.client.get<StarWarsSpeciesResponse>(nextUrl);
+        result.push(...data.results);
+
+        const nextPageNumber: string | undefined = data.next?.charAt(data.next.length - 1) ?? undefined;
+
+        nextUrl = nextPageNumber ? `${path}?page=${nextPageNumber}` : null;
+      }
+
+      return result;
+    } catch (error: any) {
+      this.dependencies.logger.error("Could not get species");
 
       this.dependencies.logger.debug(`Error: ${JSON.stringify(error, null, 2)}`);
 

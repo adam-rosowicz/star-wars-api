@@ -1,5 +1,6 @@
 import { AwilixContainer, Lifetime, asClass, asFunction } from "awilix";
 import { filmRouting } from "../app/features/film/routing";
+import { speciesRouting } from "../app/features/species/routing";
 // ROUTING_IMPORTS
 
 export async function registerRouting(container: AwilixContainer) {
@@ -13,6 +14,7 @@ export async function registerRouting(container: AwilixContainer) {
 
   container.register({
     filmRouting: asFunction(filmRouting),
+    speciesRouting: asFunction(speciesRouting),
     // ROUTING_SETUP
   });
 
