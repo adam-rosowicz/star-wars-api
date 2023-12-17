@@ -57,6 +57,31 @@ export type StarWarsVehicle = {
   edited: string;
 };
 
+export type StarWarsStarship = {
+  name: string;
+  model: string;
+  starship_class: string;
+  manufacturer: string;
+  cost_in_credits: string;
+  length: string;
+  crew: string;
+  passengers: string;
+  max_atmosphering_speed: string;
+  hyperdrive_rating: string;
+  MGLT: string;
+  cargo_capacity: string;
+  consumables?: string; // Assuming it's optional
+  films: string[]; // Assuming Film URL Resources are strings
+  pilots: string[]; // Assuming People URL Resources are strings
+  url: string;
+  created: string;
+  edited: string;
+};
+
+interface StarWarsStarshipsResponse extends StarWarsResponse {
+  results: StarWarsStarship[];
+}
+
 interface StarWarsSpeciesResponse extends StarWarsResponse {
   results: StarWarsSpecie[];
 }
@@ -157,6 +182,39 @@ export class StarWarsClient {
       while (nextUrl) {
         // eslint-disable-next-line no-await-in-loop
         const { data }: { data: StarWarsVehiclesResponse } = await this.client.get<StarWarsVehiclesResponse>(nextUrl);
+        result.push(...data.results);
+
+        const nextPageNumber: string | undefined = data.next?.charAt(data.next.length - 1) ?? undefined;
+
+        nextUrl = nextPageNumber ? `${path}?page=${nextPageNumber}` : null;
+      }
+
+      return result;
+    } catch (error: any) {
+      this.dependencies.logger.error("Could not get vehicles");
+
+      this.dependencies.logger.debug(`Error: ${JSON.stringify(error, null, 2)}`);
+
+      if (error?.response?.data) {
+        throw new HttpError(error.response.data.message, error.response.data.status);
+      }
+
+      throw error;
+    }
+  }
+
+  public async getStarships(filter?: string) {
+    try {
+      let path = "/starships";
+      if (filter && filter !== "") {
+        path += `?search=${filter}`;
+      }
+      const result: StarWarsStarship[] = [];
+      let nextUrl: string | null = path;
+
+      while (nextUrl) {
+        // eslint-disable-next-line no-await-in-loop
+        const { data }: { data: StarWarsStarshipsResponse } = await this.client.get<StarWarsStarshipsResponse>(nextUrl);
         result.push(...data.results);
 
         const nextPageNumber: string | undefined = data.next?.charAt(data.next.length - 1) ?? undefined;
