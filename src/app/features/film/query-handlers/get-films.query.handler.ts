@@ -15,6 +15,6 @@ export default class GetFilmsQueryHandler implements QueryHandler<GetFilmsQuery,
     const { filter } = query.payload;
     const films = await this.dependencies.starWarsClient.getFilms(filter);
 
-    return new GetFilmsQueryResult({ items: films.results });
+    return new GetFilmsQueryResult({ items: films });
   }
 }
