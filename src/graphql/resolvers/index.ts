@@ -4,6 +4,7 @@ import { Resolvers } from "../types";
 import { getFilmsQuery } from "../../app/features/film/graphql/queries/get-films.query";
 import { getSpeciesQuery } from "../../app/features/species/graphql/queries/get-species.query";
 import { getVehiclesQuery } from "../../app/features/vehicle/graphql/queries/get-vehicles.query";
+import { getStarshipsQuery } from "../../app/features/starship/graphql/queries/get-starships.query";
 // QUERY_IMPORTS
 // MUTATION_IMPORTS
 
@@ -24,6 +25,7 @@ export const createResolvers = (_dependencies: ResolversDependencies): Resolvers
       getFilms: getFilmsQuery,
       getSpecies: getSpeciesQuery,
       getVehicles: getVehiclesQuery,
+      getStarships: getStarshipsQuery,
       // GRAPHQL_QUERIES
     },
   };
