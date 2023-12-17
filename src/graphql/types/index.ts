@@ -44,10 +44,36 @@ export type FilmsCollection = {
   total: Scalars['Int']['output'];
 };
 
+export type Planet = {
+  __typename?: 'Planet';
+  climate: Scalars['String']['output'];
+  created: Scalars['String']['output'];
+  diameter: Scalars['String']['output'];
+  edited: Scalars['String']['output'];
+  films: Array<Scalars['String']['output']>;
+  gravity: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  orbital_period: Scalars['String']['output'];
+  population: Scalars['String']['output'];
+  residents: Array<Scalars['String']['output']>;
+  rotation_period: Scalars['String']['output'];
+  surface_water: Scalars['String']['output'];
+  terrain: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+};
+
+export type PlanetsCollection = {
+  __typename?: 'PlanetsCollection';
+  items: Array<Maybe<Planet>>;
+  total: Scalars['Int']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   /** Returns all films. */
   getFilms?: Maybe<FilmsCollection>;
+  /** Returns all planets. */
+  getPlanets?: Maybe<PlanetsCollection>;
   /** Returns all species. */
   getSpecies?: Maybe<SpeciesCollection>;
   /** Returns all starships. */
@@ -58,6 +84,11 @@ export type Query = {
 
 
 export type QueryGetFilmsArgs = {
+  filter?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryGetPlanetsArgs = {
   filter?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -230,6 +261,8 @@ export type ResolversTypes = {
   Film: ResolverTypeWrapper<Film>;
   FilmsCollection: ResolverTypeWrapper<FilmsCollection>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  Planet: ResolverTypeWrapper<Planet>;
+  PlanetsCollection: ResolverTypeWrapper<PlanetsCollection>;
   Query: ResolverTypeWrapper<{}>;
   Specie: ResolverTypeWrapper<Specie>;
   SpeciesCollection: ResolverTypeWrapper<SpeciesCollection>;
@@ -246,6 +279,8 @@ export type ResolversParentTypes = {
   Film: Film;
   FilmsCollection: FilmsCollection;
   Int: Scalars['Int']['output'];
+  Planet: Planet;
+  PlanetsCollection: PlanetsCollection;
   Query: {};
   Specie: Specie;
   SpeciesCollection: SpeciesCollection;
@@ -288,8 +323,33 @@ export type FilmsCollectionResolvers<ContextType = any, ParentType extends Resol
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type PlanetResolvers<ContextType = any, ParentType extends ResolversParentTypes['Planet'] = ResolversParentTypes['Planet']> = {
+  climate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  created?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  diameter?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  edited?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  films?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  gravity?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  orbital_period?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  population?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  residents?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  rotation_period?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  surface_water?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  terrain?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PlanetsCollectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['PlanetsCollection'] = ResolversParentTypes['PlanetsCollection']> = {
+  items?: Resolver<Array<Maybe<ResolversTypes['Planet']>>, ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getFilms?: Resolver<Maybe<ResolversTypes['FilmsCollection']>, ParentType, ContextType, Partial<QueryGetFilmsArgs>>;
+  getPlanets?: Resolver<Maybe<ResolversTypes['PlanetsCollection']>, ParentType, ContextType, Partial<QueryGetPlanetsArgs>>;
   getSpecies?: Resolver<Maybe<ResolversTypes['SpeciesCollection']>, ParentType, ContextType, Partial<QueryGetSpeciesArgs>>;
   getStarships?: Resolver<Maybe<ResolversTypes['StarshipsCollection']>, ParentType, ContextType, Partial<QueryGetStarshipsArgs>>;
   getVehicles?: Resolver<Maybe<ResolversTypes['VehiclesCollection']>, ParentType, ContextType, Partial<QueryGetVehiclesArgs>>;
@@ -376,6 +436,8 @@ export type VehiclesCollectionResolvers<ContextType = any, ParentType extends Re
 export type Resolvers<ContextType = any> = {
   Film?: FilmResolvers<ContextType>;
   FilmsCollection?: FilmsCollectionResolvers<ContextType>;
+  Planet?: PlanetResolvers<ContextType>;
+  PlanetsCollection?: PlanetsCollectionResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Specie?: SpecieResolvers<ContextType>;
   SpeciesCollection?: SpeciesCollectionResolvers<ContextType>;

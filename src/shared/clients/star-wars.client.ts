@@ -49,9 +49,9 @@ export type StarWarsVehicle = {
   passengers: string;
   max_atmosphering_speed: string;
   cargo_capacity: string;
-  consumables?: string; // Assuming it's optional
-  films: string[]; // Assuming Film URL Resources are strings
-  pilots: string[]; // Assuming People URL Resources are strings
+  consumables?: string;
+  films: string[];
+  pilots: string[];
   url: string;
   created: string;
   edited: string;
@@ -70,9 +70,26 @@ export type StarWarsStarship = {
   hyperdrive_rating: string;
   MGLT: string;
   cargo_capacity: string;
-  consumables?: string; // Assuming it's optional
-  films: string[]; // Assuming Film URL Resources are strings
-  pilots: string[]; // Assuming People URL Resources are strings
+  consumables?: string;
+  films: string[];
+  pilots: string[];
+  url: string;
+  created: string;
+  edited: string;
+};
+
+export type StarWarsPlanet = {
+  name: string;
+  diameter: string;
+  rotation_period: string;
+  orbital_period: string;
+  gravity: string;
+  population: string;
+  climate: string;
+  terrain: string;
+  surface_water: string;
+  residents: string[];
+  films: string[];
   url: string;
   created: string;
   edited: string;
@@ -86,6 +103,9 @@ interface StarWarsSpeciesResponse extends StarWarsResponse {
   results: StarWarsSpecie[];
 }
 
+interface StarWarsPlanetsResponse extends StarWarsResponse {
+  results: StarWarsPlanet[];
+}
 interface StarWarsVehiclesResponse extends StarWarsResponse {
   results: StarWarsVehicle[];
 }
@@ -224,7 +244,40 @@ export class StarWarsClient {
 
       return result;
     } catch (error: any) {
-      this.dependencies.logger.error("Could not get vehicles");
+      this.dependencies.logger.error("Could not get starships");
+
+      this.dependencies.logger.debug(`Error: ${JSON.stringify(error, null, 2)}`);
+
+      if (error?.response?.data) {
+        throw new HttpError(error.response.data.message, error.response.data.status);
+      }
+
+      throw error;
+    }
+  }
+
+  public async getPlanets(filter?: string) {
+    try {
+      let path = "/planets";
+      if (filter && filter !== "") {
+        path += `?search=${filter}`;
+      }
+      const result: StarWarsPlanet[] = [];
+      let nextUrl: string | null = path;
+
+      while (nextUrl) {
+        // eslint-disable-next-line no-await-in-loop
+        const { data }: { data: StarWarsPlanetsResponse } = await this.client.get<StarWarsPlanetsResponse>(nextUrl);
+        result.push(...data.results);
+
+        const nextPageNumber: string | undefined = data.next?.charAt(data.next.length - 1) ?? undefined;
+
+        nextUrl = nextPageNumber ? `${path}?page=${nextPageNumber}` : null;
+      }
+
+      return result;
+    } catch (error: any) {
+      this.dependencies.logger.error("Could not get planets");
 
       this.dependencies.logger.debug(`Error: ${JSON.stringify(error, null, 2)}`);
 

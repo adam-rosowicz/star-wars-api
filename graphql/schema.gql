@@ -105,6 +105,31 @@ type Starship @cacheControl(maxAge: 86400){
   edited: String!
 }
 
+type PlanetsCollection {
+    items: [Planet]!
+    total: Int!
+}
+
+type Planet @cacheControl(maxAge: 86400){
+  name: String!
+  diameter: String!
+  rotation_period: String!
+  orbital_period: String!
+  gravity: String!
+  population: String!
+  climate: String!
+  terrain: String!
+  surface_water: String!
+  residents: [String!]!
+  films: [String!]!
+  url: String!
+  created: String!
+  edited: String!
+}
+
+
+
+
 type Query {
   """
   Returns all films.
@@ -122,4 +147,8 @@ type Query {
   Returns all starships.
   """
   getStarships(filter: String): StarshipsCollection @cacheControl(maxAge: 86400)
+  """
+  Returns all planets.
+  """
+  getPlanets(filter: String): PlanetsCollection @cacheControl(maxAge: 86400)
 }
