@@ -5,6 +5,7 @@ export interface RoutingDependencies {
   speciesRouting: express.Router;
   vehicleRouting: express.Router;
   starshipRouting: express.Router;
+  planetRouting: express.Router;
   // ROUTES_INTERFACE
 }
 
@@ -13,6 +14,7 @@ export const createRouter = ({
   speciesRouting,
   vehicleRouting,
   starshipRouting,
+  planetRouting,
   // ROUTES_DEPENDENCIES
 }: RoutingDependencies) => {
   const router = express.Router();
@@ -21,6 +23,7 @@ export const createRouter = ({
   router.use("/species", speciesRouting);
   router.use("/vehicle", vehicleRouting);
   router.use("/starship", starshipRouting);
+  router.use("/planet", planetRouting);
   // ROUTES_CONFIG
   return router;
 };
