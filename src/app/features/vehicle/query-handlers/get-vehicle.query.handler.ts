@@ -14,6 +14,8 @@ export default class GetVehicleQueryHandler implements QueryHandler<GetVehicleQu
   async execute(query: GetVehicleQuery): Promise<GetVehicleQueryResult> {
     const { id } = query.payload;
 
+    const vehicle = await this.dependencies.starWarsApi.getResource<StarWarsVehicle>(ResourcesType.Vehicles, id);
+
     return new GetVehicleQueryResult(vehicle);
   }
 }

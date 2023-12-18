@@ -129,6 +129,26 @@ export class StarWarsApi {
     this.httpClient.defaults.headers.common = { Accept: "application/json" };
   }
 
+  public async getResource<T>(resourceType: ResourcesType, id: string) {
+    const path = `/${resourceType}/${id}`;
+
+    try {
+      const { data } = await this.httpClient.get<T>(path);
+
+      return data as T;
+    } catch (error: any) {
+      this.dependencies.logger.error("Could not get species");
+
+      this.dependencies.logger.debug(`Error: ${JSON.stringify(error, null, 2)}`);
+
+      if (error?.response?.data) {
+        throw new HttpError(error.response.data.message, error.response.data.status);
+      }
+
+      throw error;
+    }
+  }
+
   public async getResources<T>(resourcesType: ResourcesType, filter?: string, page?: number) {
     try {
       const result: T[] = [];

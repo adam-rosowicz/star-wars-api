@@ -12,6 +12,9 @@ export default class GetSpecieQueryHandler implements QueryHandler<GetSpecieQuer
 
   async execute(query: GetSpecieQuery): Promise<GetSpecieQueryResult> {
     const { id } = query.payload;
+
+    const specie = await this.dependencies.starWarsApi.getResource<StarWarsSpecie>(ResourcesType.Species, id);
+
     return new GetSpecieQueryResult(specie);
   }
 }

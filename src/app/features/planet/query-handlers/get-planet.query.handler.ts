@@ -12,6 +12,9 @@ export default class GetPlanetQueryHandler implements QueryHandler<GetPlanetQuer
 
   async execute(query: GetPlanetQuery): Promise<GetPlanetQueryResult> {
     const { id } = query.payload;
+
+    const planet = await this.dependencies.starWarsApi.getResource<StarWarsPlanet>(ResourcesType.Planets, id);
+
     return new GetPlanetQueryResult(planet);
   }
 }

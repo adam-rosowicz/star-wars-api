@@ -13,6 +13,8 @@ export default class GetStarshipQueryHandler implements QueryHandler<GetStarship
   async execute(query: GetStarshipQuery): Promise<GetStarshipQueryResult> {
     const { id } = query.payload;
 
+    const starship = await this.dependencies.starWarsApi.getResource<StarWarsStarship>(ResourcesType.Starships, id);
+
     return new GetStarshipQueryResult(starship);
   }
 }
