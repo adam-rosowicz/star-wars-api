@@ -24,7 +24,7 @@ type Specie @cacheControl(maxAge: 86400){
   skin_colors: String!
   eye_colors: String!
   hair_colors: String!
-  homeworld: String!
+  homeworld: String
   language: String!
   people: [String]!
   films: [String]!
@@ -127,28 +127,25 @@ type Planet @cacheControl(maxAge: 86400){
   edited: String!
 }
 
-
-
-
 type Query {
   """
   Returns all films.
   """
-  getFilms(filter: String): FilmsCollection @cacheControl(maxAge: 86400)
+  getFilms(filter: String, page: Int): FilmsCollection @cacheControl(maxAge: 86400)
   """
   Returns all species.
   """
-  getSpecies(filter: String): SpeciesCollection @cacheControl(maxAge: 86400)
+  getSpecies(filter: String, page: Int): SpeciesCollection @cacheControl(maxAge: 86400)
   """
   Returns all vehicles.
   """
-  getVehicles(filter: String): VehiclesCollection @cacheControl(maxAge: 86400)
+  getVehicles(filter: String, page: Int): VehiclesCollection @cacheControl(maxAge: 86400)
   """
   Returns all starships.
   """
-  getStarships(filter: String): StarshipsCollection @cacheControl(maxAge: 86400)
+  getStarships(filter: String, page: Int): StarshipsCollection @cacheControl(maxAge: 86400)
   """
   Returns all planets.
   """
-  getPlanets(filter: String): PlanetsCollection @cacheControl(maxAge: 86400)
+  getPlanets(filter: String, page: Int): PlanetsCollection @cacheControl(maxAge: 86400)
 }

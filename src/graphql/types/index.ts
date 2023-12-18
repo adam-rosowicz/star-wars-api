@@ -85,26 +85,31 @@ export type Query = {
 
 export type QueryGetFilmsArgs = {
   filter?: InputMaybe<Scalars['String']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryGetPlanetsArgs = {
   filter?: InputMaybe<Scalars['String']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryGetSpeciesArgs = {
   filter?: InputMaybe<Scalars['String']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryGetStarshipsArgs = {
   filter?: InputMaybe<Scalars['String']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type QueryGetVehiclesArgs = {
   filter?: InputMaybe<Scalars['String']['input']>;
+  page?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Specie = {
@@ -117,7 +122,7 @@ export type Specie = {
   eye_colors: Scalars['String']['output'];
   films: Array<Maybe<Scalars['String']['output']>>;
   hair_colors: Scalars['String']['output'];
-  homeworld: Scalars['String']['output'];
+  homeworld?: Maybe<Scalars['String']['output']>;
   language: Scalars['String']['output'];
   name: Scalars['String']['output'];
   people: Array<Maybe<Scalars['String']['output']>>;
@@ -364,7 +369,7 @@ export type SpecieResolvers<ContextType = any, ParentType extends ResolversParen
   eye_colors?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   films?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
   hair_colors?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  homeworld?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  homeworld?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   language?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   people?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;

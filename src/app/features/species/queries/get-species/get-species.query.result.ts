@@ -1,5 +1,5 @@
 import { QueryResult } from "@tshio/query-bus";
-import { StarWarsSpecie } from "../../../../../shared/clients/star-wars.client";
+import { StarWarsSpecie } from "../../../../../shared/integrations/starwars-api";
 
 interface GetSpeciesResult {
   items: StarWarsSpecie[];

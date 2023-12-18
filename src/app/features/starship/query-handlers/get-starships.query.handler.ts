@@ -1,9 +1,9 @@
 import { QueryHandler } from "@tshio/query-bus";
 import { GET_STARSHIPS_QUERY_TYPE, GetStarshipsQuery, GetStarshipsQueryResult } from "../queries/get-starships";
-import { StarWarsClient } from "../../../../shared/clients/star-wars.client";
+import { ResourcesType, StarWarsApi, StarWarsStarship } from "../../../../shared/integrations/starwars-api";
 
 interface GetStarshipsQueryDependencies {
-  starWarsClient: StarWarsClient;
+  starWarsApi: StarWarsApi;
 }
 
 export default class GetStarshipsQueryHandler implements QueryHandler<GetStarshipsQuery, GetStarshipsQueryResult> {
@@ -12,8 +12,12 @@ export default class GetStarshipsQueryHandler implements QueryHandler<GetStarshi
   constructor(private dependencies: GetStarshipsQueryDependencies) {}
 
   async execute(query: GetStarshipsQuery): Promise<GetStarshipsQueryResult> {
-    const { filter } = query.payload;
-    const starships = await this.dependencies.starWarsClient.getStarships(filter);
+    const { filter, page } = query.payload;
+    const starships = await this.dependencies.starWarsApi.getResources<StarWarsStarship>(
+      ResourcesType.Starships,
+      filter,
+      page,
+    );
 
     return new GetStarshipsQueryResult({ items: starships });
   }

@@ -4,6 +4,7 @@ export const GET_FILMS_QUERY_TYPE = "film/GET_FILMS";
 
 export interface GetFilmsQueryPayload {
   filter: string;
+  page: number;
 }
 
 export class GetFilmsQuery implements Query<GetFilmsQueryPayload> {

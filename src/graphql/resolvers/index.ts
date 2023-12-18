@@ -30,5 +30,11 @@ export const createResolvers = (_dependencies: ResolversDependencies): Resolvers
       getPlanets: getPlanetsQuery,
       // GRAPHQL_QUERIES
     },
+
+    // Film: {
+    //   planets: async (partent, args, context) => {
+    //     parent.planetsUrl
+    //   }
+    // }
   };
 };
