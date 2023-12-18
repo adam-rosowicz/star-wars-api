@@ -4,6 +4,7 @@ export const GET_STARSHIPS_QUERY_TYPE = "starship/GET_STARSHIPS";
 
 export interface GetStarshipsQueryPayload {
   filter: string;
+  page: number;
 }
 
 export class GetStarshipsQuery implements Query<GetStarshipsQueryPayload> {

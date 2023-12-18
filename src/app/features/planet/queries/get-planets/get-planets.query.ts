@@ -4,6 +4,7 @@ export const GET_PLANETS_QUERY_TYPE = "planet/GET_PLANETS";
 
 export interface GetPlanetsQueryPayload {
   filter: string;
+  page: number;
 }
 
 export class GetPlanetsQuery implements Query<GetPlanetsQueryPayload> {

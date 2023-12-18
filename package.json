@@ -43,6 +43,7 @@
     "@tshio/security-client": "0.0.20",
     "awilix": "^8.0.1",
     "axios": "^1.6.2",
+    "axios-retry": "^4.0.0",
     "body-parser": "^1.20.2",
     "celebrate": "^15.0.1",
     "class-transformer": "^0.5.1",

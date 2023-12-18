@@ -1,9 +1,9 @@
 import { QueryHandler } from "@tshio/query-bus";
 import { GET_FILMS_QUERY_TYPE, GetFilmsQuery, GetFilmsQueryResult } from "../queries/get-films";
-import { StarWarsClient } from "../../../../shared/clients/star-wars.client";
+import { ResourcesType, StarWarsApi, StarWarsFilm } from "../../../../shared/integrations/starwars-api";
 
 interface GetFilmsQueryDependencies {
-  starWarsClient: StarWarsClient;
+  starWarsApi: StarWarsApi;
 }
 
 export default class GetFilmsQueryHandler implements QueryHandler<GetFilmsQuery, GetFilmsQueryResult> {
@@ -12,8 +12,8 @@ export default class GetFilmsQueryHandler implements QueryHandler<GetFilmsQuery,
   constructor(private dependencies: GetFilmsQueryDependencies) {}
 
   async execute(query: GetFilmsQuery): Promise<GetFilmsQueryResult> {
-    const { filter } = query.payload;
-    const films = await this.dependencies.starWarsClient.getFilms(filter);
+    const { filter, page } = query.payload;
+    const films = await this.dependencies.starWarsApi.getResources<StarWarsFilm>(ResourcesType.Films, filter, page);
 
     return new GetFilmsQueryResult({ items: films });
   }
