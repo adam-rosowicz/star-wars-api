@@ -6,6 +6,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -70,16 +71,31 @@ export type PlanetsCollection = {
 
 export type Query = {
   __typename?: 'Query';
+  /** Returns film of provided id. */
+  getFilm?: Maybe<Film>;
   /** Returns all films. */
   getFilms?: Maybe<FilmsCollection>;
+  /** Returns planet of provided id. */
+  getPlanet?: Maybe<Planet>;
   /** Returns all planets. */
   getPlanets?: Maybe<PlanetsCollection>;
+  /** Returns specie of provided id. */
+  getSpecie?: Maybe<Specie>;
   /** Returns all species. */
   getSpecies?: Maybe<SpeciesCollection>;
+  /** Returns starship of provided id. */
+  getStarship?: Maybe<Starship>;
   /** Returns all starships. */
   getStarships?: Maybe<StarshipsCollection>;
+  /** Returns vehicle of provided id. */
+  getVehicle?: Maybe<Vehicle>;
   /** Returns all vehicles. */
   getVehicles?: Maybe<VehiclesCollection>;
+};
+
+
+export type QueryGetFilmArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -89,9 +105,19 @@ export type QueryGetFilmsArgs = {
 };
 
 
+export type QueryGetPlanetArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryGetPlanetsArgs = {
   filter?: InputMaybe<Scalars['String']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGetSpecieArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -101,9 +127,19 @@ export type QueryGetSpeciesArgs = {
 };
 
 
+export type QueryGetStarshipArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type QueryGetStarshipsArgs = {
   filter?: InputMaybe<Scalars['String']['input']>;
   page?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryGetVehicleArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -353,10 +389,15 @@ export type PlanetsCollectionResolvers<ContextType = any, ParentType extends Res
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getFilm?: Resolver<Maybe<ResolversTypes['Film']>, ParentType, ContextType, RequireFields<QueryGetFilmArgs, 'id'>>;
   getFilms?: Resolver<Maybe<ResolversTypes['FilmsCollection']>, ParentType, ContextType, Partial<QueryGetFilmsArgs>>;
+  getPlanet?: Resolver<Maybe<ResolversTypes['Planet']>, ParentType, ContextType, RequireFields<QueryGetPlanetArgs, 'id'>>;
   getPlanets?: Resolver<Maybe<ResolversTypes['PlanetsCollection']>, ParentType, ContextType, Partial<QueryGetPlanetsArgs>>;
+  getSpecie?: Resolver<Maybe<ResolversTypes['Specie']>, ParentType, ContextType, RequireFields<QueryGetSpecieArgs, 'id'>>;
   getSpecies?: Resolver<Maybe<ResolversTypes['SpeciesCollection']>, ParentType, ContextType, Partial<QueryGetSpeciesArgs>>;
+  getStarship?: Resolver<Maybe<ResolversTypes['Starship']>, ParentType, ContextType, RequireFields<QueryGetStarshipArgs, 'id'>>;
   getStarships?: Resolver<Maybe<ResolversTypes['StarshipsCollection']>, ParentType, ContextType, Partial<QueryGetStarshipsArgs>>;
+  getVehicle?: Resolver<Maybe<ResolversTypes['Vehicle']>, ParentType, ContextType, RequireFields<QueryGetVehicleArgs, 'id'>>;
   getVehicles?: Resolver<Maybe<ResolversTypes['VehiclesCollection']>, ParentType, ContextType, Partial<QueryGetVehiclesArgs>>;
 };
 

@@ -1,7 +1,6 @@
 import { Query } from "@tshio/query-bus";
 
 export const GET_VEHICLES_QUERY_TYPE = "vehicle/GET_VEHICLES";
-
 export interface GetVehiclesQueryPayload {
   filter: string;
   page: number;

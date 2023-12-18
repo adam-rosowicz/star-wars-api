@@ -148,4 +148,24 @@ type Query {
   Returns all planets.
   """
   getPlanets(filter: String, page: Int): PlanetsCollection @cacheControl(maxAge: 86400)
+  """
+  Returns film of provided id.
+  """
+  getFilm(id: String!): Film @cacheControl(maxAge: 86400)
+  """
+  Returns specie of provided id.
+  """
+  getSpecie(id: String!): Specie @cacheControl(maxAge: 86400)
+  """
+  Returns vehicle of provided id.
+  """
+  getVehicle(id: String!): Vehicle @cacheControl(maxAge: 86400)
+  """
+  Returns starship of provided id.
+  """
+  getStarship(id: String!): Starship @cacheControl(maxAge: 86400)
+  """
+  Returns planet of provided id.
+  """
+  getPlanet(id: String!): Planet @cacheControl(maxAge: 86400)
 }
