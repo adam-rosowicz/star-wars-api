@@ -5,9 +5,13 @@ import {
   GetUniqueWordsQueryResult,
 } from "../queries/get-unique-words";
 import { WordsService } from "../../../../shared/services/words.service";
+import { CustomRedisClient } from "../../../../tools/cache-client";
+
+export const COUNTED_UNIQUE_WORDS = "countedUniqueWords";
 
 interface GetUniqueWordsQueryHandlerDependencies {
   wordsService: WordsService;
+  redisClient: CustomRedisClient;
 }
 
 export default class GetUniqueWordsQueryHandler
@@ -19,7 +23,7 @@ export default class GetUniqueWordsQueryHandler
 
   async execute(query: GetUniqueWordsQuery): Promise<GetUniqueWordsQueryResult> {
     const { openingCrawls } = query.payload;
-    const { wordsService } = this.dependencies;
+    const { wordsService, redisClient } = this.dependencies;
 
     const countedWords = wordsService.getUniqueWordsWithCountFromTexts(openingCrawls);
 
@@ -29,6 +33,10 @@ export default class GetUniqueWordsQueryHandler
         count,
       }))
       .sort((a, b) => b.count - a.count);
+
+    const client = await redisClient.connect();
+
+    client.set(COUNTED_UNIQUE_WORDS, JSON.stringify(result), { EX: 10 });
 
     return new GetUniqueWordsQueryResult({ items: result, total: result.length });
   }

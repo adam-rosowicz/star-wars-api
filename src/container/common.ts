@@ -4,7 +4,7 @@ import { CommandBus } from "@tshio/command-bus";
 import { EventDispatcher } from "@tshio/event-dispatcher";
 import { createLogger, restrictFromProduction } from "@tshio/logger";
 import { AppConfig } from "../config/app";
-import { cacheClient } from "../tools/cache-client";
+import { CustomRedisClient, cacheClient } from "../tools/cache-client";
 import { createRouter } from "../app/router";
 import { starWarsApiConfig } from "../config/star-wars-api";
 
@@ -25,6 +25,7 @@ export async function registerCommonDependencies(appConfig: AppConfig, container
       .classic()
       .singleton()
       .inject(() => ({ throwOnFailure: false })),
+    redisClient: asClass(CustomRedisClient),
   });
 
   return container;

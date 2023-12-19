@@ -49,6 +49,11 @@ export type FilmsCollection = {
   total: Scalars['Int']['output'];
 };
 
+export type MostCommonName = {
+  __typename?: 'MostCommonName';
+  names: Array<Maybe<Scalars['String']['output']>>;
+};
+
 export type Planet = {
   __typename?: 'Planet';
   climate: Scalars['String']['output'];
@@ -80,6 +85,8 @@ export type Query = {
   getFilm?: Maybe<Film>;
   /** Returns all films. */
   getFilms?: Maybe<FilmsCollection>;
+  /** Returns an array of most common name or names from opening_crawls. */
+  getMostCommonName?: Maybe<MostCommonName>;
   /** Returns planet of provided id. */
   getPlanet?: Maybe<Planet>;
   /** Returns all planets. */
@@ -324,6 +331,7 @@ export type ResolversTypes = {
   Film: ResolverTypeWrapper<Film>;
   FilmsCollection: ResolverTypeWrapper<FilmsCollection>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  MostCommonName: ResolverTypeWrapper<MostCommonName>;
   Planet: ResolverTypeWrapper<Planet>;
   PlanetsCollection: ResolverTypeWrapper<PlanetsCollection>;
   Query: ResolverTypeWrapper<{}>;
@@ -344,6 +352,7 @@ export type ResolversParentTypes = {
   Film: Film;
   FilmsCollection: FilmsCollection;
   Int: Scalars['Int']['output'];
+  MostCommonName: MostCommonName;
   Planet: Planet;
   PlanetsCollection: PlanetsCollection;
   Query: {};
@@ -394,6 +403,11 @@ export type FilmsCollectionResolvers<ContextType = any, ParentType extends Resol
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type MostCommonNameResolvers<ContextType = any, ParentType extends ResolversParentTypes['MostCommonName'] = ResolversParentTypes['MostCommonName']> = {
+  names?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type PlanetResolvers<ContextType = any, ParentType extends ResolversParentTypes['Planet'] = ResolversParentTypes['Planet']> = {
   climate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   created?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -422,6 +436,7 @@ export type PlanetsCollectionResolvers<ContextType = any, ParentType extends Res
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getFilm?: Resolver<Maybe<ResolversTypes['Film']>, ParentType, ContextType, RequireFields<QueryGetFilmArgs, 'id'>>;
   getFilms?: Resolver<Maybe<ResolversTypes['FilmsCollection']>, ParentType, ContextType, Partial<QueryGetFilmsArgs>>;
+  getMostCommonName?: Resolver<Maybe<ResolversTypes['MostCommonName']>, ParentType, ContextType>;
   getPlanet?: Resolver<Maybe<ResolversTypes['Planet']>, ParentType, ContextType, RequireFields<QueryGetPlanetArgs, 'id'>>;
   getPlanets?: Resolver<Maybe<ResolversTypes['PlanetsCollection']>, ParentType, ContextType, Partial<QueryGetPlanetsArgs>>;
   getSpecie?: Resolver<Maybe<ResolversTypes['Specie']>, ParentType, ContextType, RequireFields<QueryGetSpecieArgs, 'id'>>;
@@ -529,6 +544,7 @@ export type VehiclesCollectionResolvers<ContextType = any, ParentType extends Re
 export type Resolvers<ContextType = any> = {
   Film?: FilmResolvers<ContextType>;
   FilmsCollection?: FilmsCollectionResolvers<ContextType>;
+  MostCommonName?: MostCommonNameResolvers<ContextType>;
   Planet?: PlanetResolvers<ContextType>;
   PlanetsCollection?: PlanetsCollectionResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

@@ -11,7 +11,7 @@ export interface CacheClient {
   scanByPattern(pattern: string): Promise<string[]>;
 }
 
-class CustomRedisClient implements CacheClient {
+export class CustomRedisClient implements CacheClient {
   private readonly cacheClient: ReturnType<typeof createClient>;
 
   private logger: Logger;

@@ -17,6 +17,7 @@ import { getVehiclesByIdsQuery } from "../../app/features/vehicle/graphql/querie
 import { getPlanetsByIdsQuery } from "../../app/features/planet/graphql/queries/get-planets-by-ids.query";
 import { getStarshipsByIdsQuery } from "../../app/features/starship/graphql/queries/get-starships-by-ids.query";
 import { getUniqueWordsQuery } from "../../app/features/film/graphql/queries/get-unique-words.query";
+import { getMostCommonNameQuery } from "../../app/features/film/graphql/queries/get-most-common-name.query";
 // QUERY_IMPORTS
 // MUTATION_IMPORTS
 
@@ -45,6 +46,7 @@ export const createResolvers = (_dependencies: ResolversDependencies): Resolvers
       getStarship: getStarshipQuery,
       getVehicle: getVehicleQuery,
       getUniqueWords: getUniqueWordsQuery,
+      getMostCommonName: getMostCommonNameQuery,
       // GRAPHQL_QUERIES
     },
 
