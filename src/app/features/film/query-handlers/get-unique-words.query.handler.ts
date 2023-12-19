@@ -6,8 +6,7 @@ import {
 } from "../queries/get-unique-words";
 import { WordsService } from "../../../../shared/services/words.service";
 import { CustomRedisClient } from "../../../../tools/cache-client";
-
-export const COUNTED_UNIQUE_WORDS = "countedUniqueWords";
+import { CACHE_TIME_TO_LIVE, COUNTED_UNIQUE_WORDS } from "../../../../shared/utils/cache.utils";
 
 interface GetUniqueWordsQueryHandlerDependencies {
   wordsService: WordsService;
@@ -36,7 +35,7 @@ export default class GetUniqueWordsQueryHandler
 
     const client = await redisClient.connect();
 
-    client.set(COUNTED_UNIQUE_WORDS, JSON.stringify(result), { EX: 10 });
+    client.set(COUNTED_UNIQUE_WORDS, JSON.stringify(result), { EX: CACHE_TIME_TO_LIVE });
 
     return new GetUniqueWordsQueryResult({ items: result, total: result.length });
   }

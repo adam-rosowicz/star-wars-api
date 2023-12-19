@@ -1,3 +1,4 @@
+
 enum CacheControlScope {
     PUBLIC
     PRIVATE
@@ -88,7 +89,7 @@ type StarshipsCollection {
     total: Int!
 }
 
-type Starship @cacheControl(maxAge: 10){
+type Starship @cacheControl(maxAge: 86400){
   name: String!
   model: String!
   starship_class: String!
@@ -133,7 +134,7 @@ type Planet @cacheControl(maxAge: 86400){
   edited: String!
 }
 
-type UniqueWords @cacheControl(maxAge: 10) {
+type UniqueWords @cacheControl(maxAge: 86400) {
  word: String!
  count: Int!
 }
@@ -144,7 +145,7 @@ type UniqueWordsCollection {
  total: Int!
 }
 
-type MostCommonName @cacheControl(maxAge: 10) {
+type MostCommonName @cacheControl(maxAge: 86400) {
   names: [String]!
 }
 
@@ -165,7 +166,7 @@ type Query {
   """
   Returns all starships.
   """
-  getStarships(filter: String, page: Int): StarshipsCollection @cacheControl(maxAge: 10)
+  getStarships(filter: String, page: Int): StarshipsCollection @cacheControl(maxAge: 86400)
   """
   Returns all planets.
   """
@@ -193,9 +194,9 @@ type Query {
   """
   Returns an array of unique words from all films opening_crawls, paired with their occurences.
   """
-  getUniqueWords: UniqueWordsCollection @cacheControl(maxAge: 10)
+  getUniqueWords: UniqueWordsCollection @cacheControl(maxAge: 86400)
   """
   Returns an array of most common name or names from opening_crawls.
   """
-  getMostCommonName: MostCommonName @cacheControl(maxAge: 10)
+  getMostCommonName: MostCommonName @cacheControl(maxAge: 86400)
 }
