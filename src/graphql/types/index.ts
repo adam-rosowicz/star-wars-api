@@ -92,6 +92,8 @@ export type Query = {
   getStarship?: Maybe<Starship>;
   /** Returns all starships. */
   getStarships?: Maybe<StarshipsCollection>;
+  /** Returns an array of unique words from all films opening_crawls, paired with their occurences. */
+  getUniqueWords?: Maybe<UniqueWordsCollection>;
   /** Returns vehicle of provided id. */
   getVehicle?: Maybe<Vehicle>;
   /** Returns all vehicles. */
@@ -207,6 +209,18 @@ export type StarshipsCollection = {
   total: Scalars['Int']['output'];
 };
 
+export type UniqueWords = {
+  __typename?: 'UniqueWords';
+  count: Scalars['Int']['output'];
+  word: Scalars['String']['output'];
+};
+
+export type UniqueWordsCollection = {
+  __typename?: 'UniqueWordsCollection';
+  items: Array<Maybe<UniqueWords>>;
+  total: Scalars['Int']['output'];
+};
+
 export type Vehicle = {
   __typename?: 'Vehicle';
   cargo_capacity: Scalars['String']['output'];
@@ -318,6 +332,8 @@ export type ResolversTypes = {
   Starship: ResolverTypeWrapper<Starship>;
   StarshipsCollection: ResolverTypeWrapper<StarshipsCollection>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
+  UniqueWords: ResolverTypeWrapper<UniqueWords>;
+  UniqueWordsCollection: ResolverTypeWrapper<UniqueWordsCollection>;
   Vehicle: ResolverTypeWrapper<Vehicle>;
   VehiclesCollection: ResolverTypeWrapper<VehiclesCollection>;
 };
@@ -336,6 +352,8 @@ export type ResolversParentTypes = {
   Starship: Starship;
   StarshipsCollection: StarshipsCollection;
   String: Scalars['String']['output'];
+  UniqueWords: UniqueWords;
+  UniqueWordsCollection: UniqueWordsCollection;
   Vehicle: Vehicle;
   VehiclesCollection: VehiclesCollection;
 };
@@ -410,6 +428,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getSpecies?: Resolver<Maybe<ResolversTypes['SpeciesCollection']>, ParentType, ContextType, Partial<QueryGetSpeciesArgs>>;
   getStarship?: Resolver<Maybe<ResolversTypes['Starship']>, ParentType, ContextType, RequireFields<QueryGetStarshipArgs, 'id'>>;
   getStarships?: Resolver<Maybe<ResolversTypes['StarshipsCollection']>, ParentType, ContextType, Partial<QueryGetStarshipsArgs>>;
+  getUniqueWords?: Resolver<Maybe<ResolversTypes['UniqueWordsCollection']>, ParentType, ContextType>;
   getVehicle?: Resolver<Maybe<ResolversTypes['Vehicle']>, ParentType, ContextType, RequireFields<QueryGetVehicleArgs, 'id'>>;
   getVehicles?: Resolver<Maybe<ResolversTypes['VehiclesCollection']>, ParentType, ContextType, Partial<QueryGetVehiclesArgs>>;
 };
@@ -468,6 +487,18 @@ export type StarshipsCollectionResolvers<ContextType = any, ParentType extends R
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UniqueWordsResolvers<ContextType = any, ParentType extends ResolversParentTypes['UniqueWords'] = ResolversParentTypes['UniqueWords']> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  word?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UniqueWordsCollectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UniqueWordsCollection'] = ResolversParentTypes['UniqueWordsCollection']> = {
+  items?: Resolver<Array<Maybe<ResolversTypes['UniqueWords']>>, ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type VehicleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Vehicle'] = ResolversParentTypes['Vehicle']> = {
   cargo_capacity?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   consumables?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -505,6 +536,8 @@ export type Resolvers<ContextType = any> = {
   SpeciesCollection?: SpeciesCollectionResolvers<ContextType>;
   Starship?: StarshipResolvers<ContextType>;
   StarshipsCollection?: StarshipsCollectionResolvers<ContextType>;
+  UniqueWords?: UniqueWordsResolvers<ContextType>;
+  UniqueWordsCollection?: UniqueWordsCollectionResolvers<ContextType>;
   Vehicle?: VehicleResolvers<ContextType>;
   VehiclesCollection?: VehiclesCollectionResolvers<ContextType>;
 };
