@@ -133,6 +133,18 @@ type Planet @cacheControl(maxAge: 86400){
   edited: String!
 }
 
+type UniqueWords @cacheControl(maxAge: 86400) {
+ word: String!
+ count: Int!
+}
+
+
+type UniqueWordsCollection {
+ items: [UniqueWords]!
+ total: Int!
+}
+
+
 type Query {
   """
   Returns all films.
@@ -174,4 +186,8 @@ type Query {
   Returns planet of provided id.
   """
   getPlanet(id: String!): Planet @cacheControl(maxAge: 86400)
+  """
+  Returns an array of unique words from all films opening_crawls, paired with their occurences.
+  """
+  getUniqueWords: UniqueWordsCollection @cacheControl(maxAge: 86400)
 }
