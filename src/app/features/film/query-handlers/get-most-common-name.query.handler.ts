@@ -30,25 +30,25 @@ export default class GetMostCommonNameQueryHandler
     );
 
     const redis = await redisClient.connect();
-    const countedUniqueWords = await redis.get(COUNTED_UNIQUE_WORDS);
-    let uniqueWords: { word: string; count: number }[];
+    const cachedUniqueWords = await redis.get(COUNTED_UNIQUE_WORDS);
+    let countedUniqueWords: { word: string; count: number }[];
 
-    if (countedUniqueWords) {
-      uniqueWords = JSON.parse(countedUniqueWords!);
+    if (cachedUniqueWords) {
+      countedUniqueWords = JSON.parse(cachedUniqueWords);
     } else {
       const openingCrawls = (await starWarsApi.getResources<StarWarsFilm>(ResourcesType.Films)).map(
         (film) => film.opening_crawl,
       );
 
       const words = wordsService.getUniqueWordsWithCountFromTexts(openingCrawls);
-      uniqueWords = Object.entries(words).map(([word, count]) => ({
+      countedUniqueWords = Object.entries(words).map(([word, count]) => ({
         word,
         count,
       }));
     }
 
     const namesWithMaxCount = wordsService
-      .getWordsMostOccuredInGivenList(personFirstNames, uniqueWords)
+      .getWordsMostOccuredInGivenList(personFirstNames, countedUniqueWords)
       .map((name) => name.word.charAt(0).toUpperCase() + name.word.slice(1));
 
     return new GetMostCommonNameQueryResult({ names: namesWithMaxCount });
