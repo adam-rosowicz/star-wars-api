@@ -3,6 +3,7 @@ import { StarWarsVehicle } from "../../../../../shared/integrations/starwars-api
 
 interface GetVehiclesResult {
   items: StarWarsVehicle[];
+  total: number;
 }
 
 export class GetVehiclesQueryResult implements QueryResult<any> {

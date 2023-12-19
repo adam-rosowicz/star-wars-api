@@ -15,6 +15,11 @@ export default class GetStarshipQueryHandler implements QueryHandler<GetStarship
 
     const starship = await this.dependencies.starWarsApi.getResource<StarWarsStarship>(ResourcesType.Starships, id);
 
-    return new GetStarshipQueryResult(starship);
+    if (!starship) {
+      return new GetStarshipQueryResult(null);
+    }
+    const resultStarship = { filmsUrl: starship.films, ...starship };
+
+    return new GetStarshipQueryResult(resultStarship);
   }
 }

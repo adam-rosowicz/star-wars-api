@@ -1,5 +1,3 @@
-# import * from './parts/film.gql'
-
 enum CacheControlScope {
     PUBLIC
     PRIVATE
@@ -16,6 +14,27 @@ type SpeciesCollection {
   total: Int!
 }
 
+type Film @cacheControl(maxAge: 86400){
+  title: String!
+  episode_id: String!
+  opening_crawl: String!
+  director: String!
+  producer: String!
+  release_date: String!
+  characters: [String]!
+  planets: [Planet]!
+  planetsUrl: [String]!
+  starships: [Starship]!
+  starshipsUrl: [String]!
+  vehicles: [Vehicle]!
+  vehiclesUrl: [String]!
+  species: [Specie]!
+  speciesUrl: [String]!
+  created: String!
+  edited: String!
+  url: String!
+}
+
 type Specie @cacheControl(maxAge: 86400){
   name: String!
   classification: String!
@@ -27,7 +46,8 @@ type Specie @cacheControl(maxAge: 86400){
   homeworld: String
   language: String!
   people: [String]!
-  films: [String]!
+  films: [Film]!
+  filmsUrl: [String]!
   created: String!
   edited: String!
   url: String!
@@ -36,23 +56,6 @@ type Specie @cacheControl(maxAge: 86400){
 type FilmsCollection {
     items: [Film]!
     total: Int!
-}
-
-type Film @cacheControl(maxAge: 86400){
-  title: String!
-  episode_id: String!
-  opening_crawl: String!
-  director: String!
-  producer: String!
-  release_date: String!
-  characters: [String]!
-  planets: [String]!
-  starships: [String]!
-  vehicles: [String]!
-  species: [String]!
-  created: String!
-  edited: String!
-  url: String!
 }
 
 type VehiclesCollection {
@@ -72,7 +75,8 @@ type Vehicle @cacheControl(maxAge: 86400) {
   max_atmosphering_speed: String!
   cargo_capacity: String!
   consumables: String
-  films: [String!]!
+  films: [Film]!
+  filmsUrl: [String]!
   pilots: [String!]!
   url: String!
   created: String!
@@ -84,7 +88,7 @@ type StarshipsCollection {
     total: Int!
 }
 
-type Starship @cacheControl(maxAge: 86400){
+type Starship @cacheControl(maxAge: 10){
   name: String!
   model: String!
   starship_class: String!
@@ -98,7 +102,8 @@ type Starship @cacheControl(maxAge: 86400){
   MGLT: String!
   cargo_capacity: String!
   consumables: String
-  films: [String!]!
+  filmsUrl: [String!]
+  films: [Film]
   pilots: [String!]!
   url: String!
   created: String!
@@ -121,7 +126,8 @@ type Planet @cacheControl(maxAge: 86400){
   terrain: String!
   surface_water: String!
   residents: [String!]!
-  films: [String!]!
+  films: [Film]!
+  filmsUrl: [String]!
   url: String!
   created: String!
   edited: String!
@@ -143,7 +149,7 @@ type Query {
   """
   Returns all starships.
   """
-  getStarships(filter: String, page: Int): StarshipsCollection @cacheControl(maxAge: 86400)
+  getStarships(filter: String, page: Int): StarshipsCollection @cacheControl(maxAge: 10)
   """
   Returns all planets.
   """

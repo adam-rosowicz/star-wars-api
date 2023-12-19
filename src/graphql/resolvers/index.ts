@@ -11,6 +11,11 @@ import { getPlanetQuery } from "../../app/features/planet/graphql/queries/get-pl
 import { getSpecieQuery } from "../../app/features/species/graphql/queries/get-specie.query";
 import { getStarshipQuery } from "../../app/features/starship/graphql/queries/get-starship.query";
 import { getVehicleQuery } from "../../app/features/vehicle/graphql/queries/get-vehicle.query";
+import { getFilmsByIdsQuery } from "../../app/features/film/graphql/queries/get-films-by-ids.query";
+import { getSpeciesByIdsQuery } from "../../app/features/species/graphql/queries/get-species-by-ids.query";
+import { getVehiclesByIdsQuery } from "../../app/features/vehicle/graphql/queries/get-vehicles-by-ids.query";
+import { getPlanetsByIdsQuery } from "../../app/features/planet/graphql/queries/get-planets-by-ids.query";
+import { getStarshipsByIdsQuery } from "../../app/features/starship/graphql/queries/get-starships-by-ids.query";
 // QUERY_IMPORTS
 // MUTATION_IMPORTS
 
@@ -41,10 +46,23 @@ export const createResolvers = (_dependencies: ResolversDependencies): Resolvers
       // GRAPHQL_QUERIES
     },
 
-    // Film: {
-    //   planets: async (partent, args, context) => {
-    //     parent.planetsUrl
-    //   }
-    // }
+    Starship: {
+      films: getFilmsByIdsQuery,
+    },
+    Film: {
+      species: getSpeciesByIdsQuery,
+      vehicles: getVehiclesByIdsQuery,
+      planets: getPlanetsByIdsQuery,
+      starships: getStarshipsByIdsQuery,
+    },
+    Planet: {
+      films: getFilmsByIdsQuery,
+    },
+    Vehicle: {
+      films: getFilmsByIdsQuery,
+    },
+    Specie: {
+      films: getFilmsByIdsQuery,
+    },
   };
 };

@@ -1,7 +1,6 @@
 import { Logger } from "@tshio/logger";
 import { AxiosInstance } from "axios";
 import { StarWarsApiConfig } from "../../../config/star-wars-api";
-import { HttpError } from "../../../errors/http.error";
 import { HttpProvider } from "../http-provider";
 
 export type StarWarsFilm = {
@@ -131,18 +130,17 @@ export class StarWarsApi {
 
   public async getResource<T>(resourceType: ResourcesType, id: string) {
     const path = `/${resourceType}/${id}`;
-
     try {
       const { data } = await this.httpClient.get<T>(path);
 
       return data as T;
     } catch (error: any) {
-      this.dependencies.logger.error("Could not get species");
+      this.dependencies.logger.error("Could not get resource");
 
       this.dependencies.logger.debug(`Error: ${JSON.stringify(error, null, 2)}`);
 
       if (error?.response?.data) {
-        throw new HttpError(error.response.data.message, error.response.data.status);
+        return null;
       }
 
       throw error;
@@ -185,12 +183,12 @@ export class StarWarsApi {
 
       return result;
     } catch (error: any) {
-      this.dependencies.logger.error("Could not get species");
+      this.dependencies.logger.error("Could not get resources");
 
       this.dependencies.logger.debug(`Error: ${JSON.stringify(error, null, 2)}`);
 
       if (error?.response?.data) {
-        throw new HttpError(error.response.data.message, error.response.data.status);
+        return [];
       }
 
       throw error;

@@ -3,6 +3,7 @@ import { StarWarsPlanet } from "../../../../../shared/integrations/starwars-api"
 
 interface GetPlanetsResult {
   items: StarWarsPlanet[];
+  total: number;
 }
 
 export class GetPlanetsQueryResult implements QueryResult<any> {

@@ -19,6 +19,13 @@ export default class GetVehiclesQueryHandler implements QueryHandler<GetVehicles
       page,
     );
 
-    return new GetVehiclesQueryResult({ items: vehicles });
+    const resultVehicles = vehicles.map((vehicle) => {
+      return {
+        ...vehicle,
+        filmsUrl: vehicle.films,
+      };
+    });
+
+    return new GetVehiclesQueryResult({ items: resultVehicles, total: resultVehicles.length });
   }
 }

@@ -19,6 +19,13 @@ export default class GetPlanetsQueryHandler implements QueryHandler<GetPlanetsQu
       page,
     );
 
-    return new GetPlanetsQueryResult({ items: planets });
+    const resultPlanets = planets.map((planet) => {
+      return {
+        filmsUrl: planet.films,
+        ...planet,
+      };
+    });
+
+    return new GetPlanetsQueryResult({ items: resultPlanets, total: resultPlanets.length });
   }
 }

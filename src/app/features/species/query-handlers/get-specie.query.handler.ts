@@ -15,6 +15,12 @@ export default class GetSpecieQueryHandler implements QueryHandler<GetSpecieQuer
 
     const specie = await this.dependencies.starWarsApi.getResource<StarWarsSpecie>(ResourcesType.Species, id);
 
-    return new GetSpecieQueryResult(specie);
+    if (!specie) {
+      return new GetSpecieQueryResult(null);
+    }
+
+    const resultSpecie = { filmsUrl: specie.films, ...specie };
+
+    return new GetSpecieQueryResult(resultSpecie);
   }
 }

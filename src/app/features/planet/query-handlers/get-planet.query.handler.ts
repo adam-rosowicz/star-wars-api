@@ -15,6 +15,11 @@ export default class GetPlanetQueryHandler implements QueryHandler<GetPlanetQuer
 
     const planet = await this.dependencies.starWarsApi.getResource<StarWarsPlanet>(ResourcesType.Planets, id);
 
-    return new GetPlanetQueryResult(planet);
+    if (!planet) {
+      return new GetPlanetQueryResult(null);
+    }
+    const resultPlanet = { filmsUrl: planet.films, ...planet };
+
+    return new GetPlanetQueryResult(resultPlanet);
   }
 }

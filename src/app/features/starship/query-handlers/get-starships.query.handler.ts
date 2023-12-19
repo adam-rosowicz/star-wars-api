@@ -19,6 +19,13 @@ export default class GetStarshipsQueryHandler implements QueryHandler<GetStarshi
       page,
     );
 
-    return new GetStarshipsQueryResult({ items: starships });
+    const resultStarships = starships.map((starship) => {
+      return {
+        ...starship,
+        filmsUrl: starship.films,
+      };
+    });
+
+    return new GetStarshipsQueryResult({ items: resultStarships, total: resultStarships.length });
   }
 }
