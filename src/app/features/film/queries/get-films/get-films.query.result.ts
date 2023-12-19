@@ -3,6 +3,7 @@ import { StarWarsFilm } from "../../../../../shared/integrations/starwars-api";
 
 interface GetFilmsResult {
   items: StarWarsFilm[];
+  total: number;
 }
 
 export class GetFilmsQueryResult implements QueryResult<any> {

@@ -12,8 +12,20 @@ export default class GetFilmQueryHandler implements QueryHandler<GetFilmQuery, G
 
   async execute(query: GetFilmQuery): Promise<GetFilmQueryResult> {
     const { id } = query.payload;
-
     const film = await this.dependencies.starWarsApi.getResource<StarWarsFilm>(ResourcesType.Films, id);
-    return new GetFilmQueryResult(film);
+
+    if (!film) {
+      return new GetFilmQueryResult(null);
+    }
+
+    const resultFilm = {
+      planetsUrl: film.planets,
+      speciesUrl: film.species,
+      starshipsUrl: film.starships,
+      vehiclesUrl: film.vehicles,
+      ...film,
+    };
+
+    return new GetFilmQueryResult(resultFilm);
   }
 }

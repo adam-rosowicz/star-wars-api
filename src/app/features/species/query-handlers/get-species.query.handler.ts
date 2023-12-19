@@ -20,6 +20,13 @@ export default class GetSpeciesQueryHandler implements QueryHandler<GetSpeciesQu
       page,
     );
 
-    return new GetSpeciesQueryResult({ items: species });
+    const resultSpecies = species.map((specie) => {
+      return {
+        filmsUrl: specie.films,
+        ...specie,
+      };
+    });
+
+    return new GetSpeciesQueryResult({ items: resultSpecies, total: resultSpecies.length });
   }
 }

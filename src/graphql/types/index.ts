@@ -29,14 +29,18 @@ export type Film = {
   edited: Scalars['String']['output'];
   episode_id: Scalars['String']['output'];
   opening_crawl: Scalars['String']['output'];
-  planets: Array<Maybe<Scalars['String']['output']>>;
+  planets: Array<Maybe<Planet>>;
+  planetsUrl: Array<Maybe<Scalars['String']['output']>>;
   producer: Scalars['String']['output'];
   release_date: Scalars['String']['output'];
-  species: Array<Maybe<Scalars['String']['output']>>;
-  starships: Array<Maybe<Scalars['String']['output']>>;
+  species: Array<Maybe<Specie>>;
+  speciesUrl: Array<Maybe<Scalars['String']['output']>>;
+  starships: Array<Maybe<Starship>>;
+  starshipsUrl: Array<Maybe<Scalars['String']['output']>>;
   title: Scalars['String']['output'];
   url: Scalars['String']['output'];
-  vehicles: Array<Maybe<Scalars['String']['output']>>;
+  vehicles: Array<Maybe<Vehicle>>;
+  vehiclesUrl: Array<Maybe<Scalars['String']['output']>>;
 };
 
 export type FilmsCollection = {
@@ -51,7 +55,8 @@ export type Planet = {
   created: Scalars['String']['output'];
   diameter: Scalars['String']['output'];
   edited: Scalars['String']['output'];
-  films: Array<Scalars['String']['output']>;
+  films: Array<Maybe<Film>>;
+  filmsUrl: Array<Maybe<Scalars['String']['output']>>;
   gravity: Scalars['String']['output'];
   name: Scalars['String']['output'];
   orbital_period: Scalars['String']['output'];
@@ -156,7 +161,8 @@ export type Specie = {
   designation: Scalars['String']['output'];
   edited: Scalars['String']['output'];
   eye_colors: Scalars['String']['output'];
-  films: Array<Maybe<Scalars['String']['output']>>;
+  films: Array<Maybe<Film>>;
+  filmsUrl: Array<Maybe<Scalars['String']['output']>>;
   hair_colors: Scalars['String']['output'];
   homeworld?: Maybe<Scalars['String']['output']>;
   language: Scalars['String']['output'];
@@ -181,7 +187,8 @@ export type Starship = {
   created: Scalars['String']['output'];
   crew: Scalars['String']['output'];
   edited: Scalars['String']['output'];
-  films: Array<Scalars['String']['output']>;
+  films?: Maybe<Array<Maybe<Film>>>;
+  filmsUrl?: Maybe<Array<Scalars['String']['output']>>;
   hyperdrive_rating: Scalars['String']['output'];
   length: Scalars['String']['output'];
   manufacturer: Scalars['String']['output'];
@@ -208,7 +215,8 @@ export type Vehicle = {
   created: Scalars['String']['output'];
   crew: Scalars['String']['output'];
   edited: Scalars['String']['output'];
-  films: Array<Scalars['String']['output']>;
+  films: Array<Maybe<Film>>;
+  filmsUrl: Array<Maybe<Scalars['String']['output']>>;
   length: Scalars['String']['output'];
   manufacturer: Scalars['String']['output'];
   max_atmosphering_speed: Scalars['String']['output'];
@@ -347,14 +355,18 @@ export type FilmResolvers<ContextType = any, ParentType extends ResolversParentT
   edited?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   episode_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   opening_crawl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  planets?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  planets?: Resolver<Array<Maybe<ResolversTypes['Planet']>>, ParentType, ContextType>;
+  planetsUrl?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
   producer?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   release_date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  species?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
-  starships?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  species?: Resolver<Array<Maybe<ResolversTypes['Specie']>>, ParentType, ContextType>;
+  speciesUrl?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  starships?: Resolver<Array<Maybe<ResolversTypes['Starship']>>, ParentType, ContextType>;
+  starshipsUrl?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  vehicles?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  vehicles?: Resolver<Array<Maybe<ResolversTypes['Vehicle']>>, ParentType, ContextType>;
+  vehiclesUrl?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -369,7 +381,8 @@ export type PlanetResolvers<ContextType = any, ParentType extends ResolversParen
   created?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   diameter?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   edited?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  films?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  films?: Resolver<Array<Maybe<ResolversTypes['Film']>>, ParentType, ContextType>;
+  filmsUrl?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
   gravity?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   orbital_period?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -408,7 +421,8 @@ export type SpecieResolvers<ContextType = any, ParentType extends ResolversParen
   designation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   edited?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   eye_colors?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  films?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  films?: Resolver<Array<Maybe<ResolversTypes['Film']>>, ParentType, ContextType>;
+  filmsUrl?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
   hair_colors?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   homeworld?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   language?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -433,7 +447,8 @@ export type StarshipResolvers<ContextType = any, ParentType extends ResolversPar
   created?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   crew?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   edited?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  films?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  films?: Resolver<Maybe<Array<Maybe<ResolversTypes['Film']>>>, ParentType, ContextType>;
+  filmsUrl?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
   hyperdrive_rating?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   length?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   manufacturer?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -460,7 +475,8 @@ export type VehicleResolvers<ContextType = any, ParentType extends ResolversPare
   created?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   crew?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   edited?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  films?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  films?: Resolver<Array<Maybe<ResolversTypes['Film']>>, ParentType, ContextType>;
+  filmsUrl?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
   length?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   manufacturer?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   max_atmosphering_speed?: Resolver<ResolversTypes['String'], ParentType, ContextType>;

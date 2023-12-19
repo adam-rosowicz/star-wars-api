@@ -16,6 +16,12 @@ export default class GetVehicleQueryHandler implements QueryHandler<GetVehicleQu
 
     const vehicle = await this.dependencies.starWarsApi.getResource<StarWarsVehicle>(ResourcesType.Vehicles, id);
 
-    return new GetVehicleQueryResult(vehicle);
+    if (!vehicle) {
+      return new GetVehicleQueryResult(null);
+    }
+
+    const resultVehicle = { filmsUrl: vehicle.films, ...vehicle };
+
+    return new GetVehicleQueryResult(resultVehicle);
   }
 }

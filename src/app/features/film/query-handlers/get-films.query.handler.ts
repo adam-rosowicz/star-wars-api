@@ -15,6 +15,16 @@ export default class GetFilmsQueryHandler implements QueryHandler<GetFilmsQuery,
     const { filter, page } = query.payload;
     const films = await this.dependencies.starWarsApi.getResources<StarWarsFilm>(ResourcesType.Films, filter, page);
 
-    return new GetFilmsQueryResult({ items: films });
+    const resultFilms = films.map((film) => {
+      return {
+        planetsUrl: film.planets,
+        speciesUrl: film.species,
+        starshipsUrl: film.starships,
+        vehiclesUrl: film.vehicles,
+        ...film,
+      };
+    });
+
+    return new GetFilmsQueryResult({ items: resultFilms, total: resultFilms.length });
   }
 }

@@ -3,6 +3,7 @@ import { StarWarsStarship } from "../../../../../shared/integrations/starwars-ap
 
 interface GetStarshipsResult {
   items: StarWarsStarship[];
+  total: number;
 }
 
 export class GetStarshipsQueryResult implements QueryResult<any> {

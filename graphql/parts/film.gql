@@ -3,7 +3,7 @@ type FilmsCollection {
     total: Int!
 }
 
-type Film {
+type Film @cacheControl(maxAge: 86400){
   title: String!
   episode_id: String!
   opening_crawl: String!
@@ -11,10 +11,14 @@ type Film {
   producer: String!
   release_date: String!
   characters: [String]!
-  planets: [String]!
-  starships: [String]!
-  vehicles: [String]!
-  species: [String]!
+  planets: [Planet]!
+  planetsUrl: [String]!
+  starships: [Starship]!
+  starshipsUrl: [String]!
+  vehicles: [Vehicle]!
+  vehiclesUrl: [String]!
+  species: [Specie]!
+  speciesUrl: [String]!
   created: String!
   edited: String!
   url: String!
