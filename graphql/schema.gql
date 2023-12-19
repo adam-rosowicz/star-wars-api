@@ -133,7 +133,7 @@ type Planet @cacheControl(maxAge: 86400){
   edited: String!
 }
 
-type UniqueWords @cacheControl(maxAge: 86400) {
+type UniqueWords @cacheControl(maxAge: 10) {
  word: String!
  count: Int!
 }
@@ -144,7 +144,7 @@ type UniqueWordsCollection {
  total: Int!
 }
 
-type MostCommonName {
+type MostCommonName @cacheControl(maxAge: 10) {
   names: [String]!
 }
 
@@ -193,9 +193,9 @@ type Query {
   """
   Returns an array of unique words from all films opening_crawls, paired with their occurences.
   """
-  getUniqueWords: UniqueWordsCollection @cacheControl(maxAge: 86400)
+  getUniqueWords: UniqueWordsCollection @cacheControl(maxAge: 10)
   """
   Returns an array of most common name or names from opening_crawls.
   """
-  getMostCommonName: MostCommonName @cacheControl(maxAge: 86400)
+  getMostCommonName: MostCommonName @cacheControl(maxAge: 10)
 }
