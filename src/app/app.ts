@@ -10,13 +10,10 @@ import { expressMiddleware } from "@apollo/server/express4";
 import http from "http";
 import { CommandBus } from "@tshio/command-bus";
 import { QueryBus } from "@tshio/query-bus";
-import swaggerUi from "swagger-ui-express";
-import YAML from "yamljs";
 import { StatusCodes } from "http-status-codes";
 import pkg from "body-parser";
 import { MiddlewareType } from "../shared/middleware-type/middleware.type";
 import { NotFoundError } from "../errors/not-found.error";
-import { multiFileSwagger } from "../tools/multi-file-swagger";
 import { AppConfig } from "../config/app";
 
 export interface AppDependencies {
@@ -87,8 +84,6 @@ async function createApp({
     });
   });
 
-  const swaggerDocument = await multiFileSwagger(YAML.load("../swagger/api.yaml"));
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use("/api", router);
   app.use("*", (req, res, next) => next(new NotFoundError("Page not found")));
   app.use(errorHandler);

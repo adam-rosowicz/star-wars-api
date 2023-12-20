@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { WordsService } from "../../shared/services/words.service";
+import { WordsService } from "../shared/services/words.service";
 
 describe("WordsService", () => {
   const wordsService = new WordsService();

@@ -32,7 +32,6 @@ services:
     env_file:
       - .env.dist
     depends_on:
-      - postgres
       - redis
     networks:
       - app
@@ -44,21 +43,11 @@ services:
     command: [sh, -c, 'node --watch --inspect=0.0.0.0 -r source-map-support/register ./src/index.js']
     hostname: boilerplate_api
     depends_on:
-      - postgres
       - redis
     ports:
       - 1337:1337
       - 4000:4000
       - 9229:9229
-    networks:
-      - app
-
-  postgres:
-    image: postgres:14-alpine
-    environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USERNAME: postgres
-      POSTGRES_DB: app
     networks:
       - app
 

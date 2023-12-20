@@ -24,4 +24,3 @@ COPY . .
 RUN npm run build
 
 COPY .env.dist ./build/.env.dist
-COPY ./swagger ./swagger
