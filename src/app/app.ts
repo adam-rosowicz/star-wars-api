@@ -10,14 +10,12 @@ import { expressMiddleware } from "@apollo/server/express4";
 import http from "http";
 import { CommandBus } from "@tshio/command-bus";
 import { QueryBus } from "@tshio/query-bus";
-import { StatusCodes } from "http-status-codes";
 import pkg from "body-parser";
 import { MiddlewareType } from "../shared/middleware-type/middleware.type";
 import { NotFoundError } from "../errors/not-found.error";
 import { AppConfig } from "../config/app";
 
 export interface AppDependencies {
-  router: express.Router;
   errorHandler: MiddlewareType;
   graphQLSchema: string;
   commandBus: CommandBus;
@@ -26,15 +24,7 @@ export interface AppDependencies {
   appConfig: AppConfig;
 }
 
-async function createApp({
-  router,
-  errorHandler,
-  graphQLSchema,
-  commandBus,
-  queryBus,
-  resolvers,
-  appConfig,
-}: AppDependencies) {
+async function createApp({ errorHandler, graphQLSchema, commandBus, queryBus, resolvers, appConfig }: AppDependencies) {
   const typeDefs = graphQLSchema;
 
   const app = express();
@@ -77,13 +67,6 @@ async function createApp({
 
   app.use(express.json());
 
-  app.get("/health", (req, res) => {
-    res.status(StatusCodes.OK).json({
-      status: "ok",
-    });
-  });
-
-  app.use("/api", router);
   app.use("*", (req, res, next) => next(new NotFoundError("Page not found")));
   app.use(errorHandler);
 
