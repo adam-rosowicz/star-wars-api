@@ -4,7 +4,7 @@ import { HttpProvider } from "../shared/integrations/http-provider";
 
 export async function registerIntegrations(container: AwilixContainer) {
   container.register({
-    starWarsApi: asClass(StarWarsApi),
+    starWarsApi: asClass(StarWarsApi).singleton(),
     httpProvider: asClass(HttpProvider),
   });
 
