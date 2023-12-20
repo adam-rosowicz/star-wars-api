@@ -30,6 +30,7 @@ export default class GetMostCommonNameQueryHandler
     );
 
     const redis = await redisClient.connect();
+
     const cachedUniqueWords = await redis.get(COUNTED_UNIQUE_WORDS);
     let countedUniqueWords: { word: string; count: number }[];
 
@@ -49,7 +50,7 @@ export default class GetMostCommonNameQueryHandler
 
     const namesWithMaxCount = wordsService
       .getWordsMostOccuredInGivenList(personFirstNames, countedUniqueWords)
-      .map((name) => name.word.charAt(0).toUpperCase() + name.word.slice(1));
+      .map((name) => `${name.word.charAt(0).toUpperCase()}${name.word.slice(1)}`);
 
     return new GetMostCommonNameQueryResult({ names: namesWithMaxCount });
   }

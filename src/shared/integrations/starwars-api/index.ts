@@ -147,7 +147,7 @@ export class StarWarsApi {
     this.httpClient.defaults.headers.common = { Accept: "application/json" };
   }
 
-  public async getResource<T>(resourceType: ResourcesType, id: string) {
+  public async getResource<T>(resourceType: ResourcesType, id: string): Promise<T | null> {
     const path = `/${resourceType}/${id}`;
     try {
       const { data } = await this.httpClient.get<T>(path);
@@ -166,7 +166,7 @@ export class StarWarsApi {
     }
   }
 
-  public async getResources<T>(resourcesType: ResourcesType, filter?: string, page?: number) {
+  public async getResources<T>(resourcesType: ResourcesType, filter?: string, page?: number): Promise<T[]> {
     try {
       const result: T[] = [];
 

@@ -80,7 +80,6 @@ async function createApp({
   app.get("/health", (req, res) => {
     res.status(StatusCodes.OK).json({
       status: "ok",
-      deployedCommit: appConfig.deployedCommit,
     });
   });
 

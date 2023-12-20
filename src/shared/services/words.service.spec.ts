@@ -1,10 +1,10 @@
 import { expect } from "chai";
-import { WordsService } from "../shared/services/words.service";
+import { WordsService } from "./words.service";
 
 describe("WordsService", () => {
   const wordsService = new WordsService();
   describe("getUniqueWordsWithCountFromTexts", () => {
-    it("should return unique unique words paired with their occurences", () => {
+    it("should return unique words paired with their occurences", () => {
       const result = wordsService.getUniqueWordsWithCountFromTexts(["Ala ma kota", "Kot ma Ale"]);
 
       expect(result).to.deep.include({ ala: 1 });
@@ -16,7 +16,7 @@ describe("WordsService", () => {
   });
 
   describe("getWordsMostOccuredInGivenList", () => {
-    it("should return unique unique words paired with their occurences", () => {
+    it("should return the most often occured word in given list ", () => {
       const result = wordsService.getWordsMostOccuredInGivenList(
         ["Ala", "ma"],
         [

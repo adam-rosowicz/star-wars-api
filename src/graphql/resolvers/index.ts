@@ -18,8 +18,6 @@ import { getPlanetsByIdsQuery } from "../../app/features/planet/graphql/queries/
 import { getStarshipsByIdsQuery } from "../../app/features/starship/graphql/queries/get-starships-by-ids.query";
 import { getUniqueWordsQuery } from "../../app/features/film/graphql/queries/get-unique-words.query";
 import { getMostCommonNameQuery } from "../../app/features/film/graphql/queries/get-most-common-name.query";
-// QUERY_IMPORTS
-// MUTATION_IMPORTS
 
 export type MutationContext = {
   commandBus: CommandBus;
@@ -32,7 +30,6 @@ export type QueryContext = {
 interface ResolversDependencies {}
 
 export const createResolvers = (_dependencies: ResolversDependencies): Resolvers => {
-  // Provide resolver functions for your schema fields
   return {
     Query: {
       getFilms: getFilmsQuery,

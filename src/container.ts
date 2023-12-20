@@ -9,8 +9,6 @@ import { loadEnvs } from "./config/env";
 import { registerMiddlewares } from "./container/middlewares";
 import { registerQueryHandlers } from "./container/query-handlers";
 import { registerCommandHandlers } from "./container/command-handlers";
-import { registerRouting } from "./container/routing";
-import { registerSubscribers } from "./container/subscribers";
 import { registerGraphQLDependencies } from "./container/graphql";
 import { registerIntegrations } from "./container/integrations";
 import { registerServices } from "./container/services";
@@ -33,9 +31,7 @@ export async function createContainer(dependencies?: ContainerDependencies): Pro
   await registerMiddlewares(container);
   await registerQueryHandlers(container);
   await registerCommandHandlers(container);
-  await registerRouting(container);
   await registerGraphQLDependencies(container);
-  await registerSubscribers(container);
   await registerIntegrations(container)
   await registerServices(container)
 
