@@ -1,6 +1,6 @@
 import { QueryHandler } from "@tshio/query-bus";
 import { GET_VEHICLE_QUERY_TYPE, GetVehicleQuery, GetVehicleQueryResult } from "../queries/get-vehicle";
-import { StarWarsApi, StarWarsVehicle, ResourcesType } from "../../../../shared/integrations/starwars-api";
+import { StarWarsApi, StarWarsVehicle, ResourcesType } from "../../../../shared/integrations/starwars-api/starwars-api";
 
 interface GetVehicleQueryDependencies {
   starWarsApi: StarWarsApi;

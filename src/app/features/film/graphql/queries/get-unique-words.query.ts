@@ -1,4 +1,4 @@
-import { StarWarsFilm } from "../../../../../shared/integrations/starwars-api";
+import { StarWarsFilm } from "../../../../../shared/integrations/starwars-api/starwars-api";
 import { QueryContext } from "../../../../../graphql/resolvers";
 import { GetFilmsQuery } from "../../queries/get-films";
 import { GetUniqueWordsQuery } from "../../queries/get-unique-words";

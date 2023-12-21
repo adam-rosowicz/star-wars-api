@@ -1,6 +1,6 @@
 import { QueryHandler } from "@tshio/query-bus";
 import { GET_PLANETS_QUERY_TYPE, GetPlanetsQuery, GetPlanetsQueryResult } from "../queries/get-planets";
-import { ResourcesType, StarWarsApi, StarWarsPlanet } from "../../../../shared/integrations/starwars-api";
+import { ResourcesType, StarWarsApi, StarWarsPlanet } from "../../../../shared/integrations/starwars-api/starwars-api";
 
 interface GetPlanetsQueryDependencies {
   starWarsApi: StarWarsApi;

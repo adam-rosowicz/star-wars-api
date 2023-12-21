@@ -1,6 +1,6 @@
 import { QueryHandler } from "@tshio/query-bus";
 import { GET_SPECIES_QUERY_TYPE, GetSpeciesQuery, GetSpeciesQueryResult } from "../queries/get-species";
-import { ResourcesType, StarWarsApi, StarWarsSpecie } from "../../../../shared/integrations/starwars-api";
+import { ResourcesType, StarWarsApi, StarWarsSpecie } from "../../../../shared/integrations/starwars-api/starwars-api";
 
 interface GetSpeciesQueryDependencies {
   starWarsApi: StarWarsApi;

@@ -4,7 +4,12 @@ import {
   GetMostCommonNameQuery,
   GetMostCommonNameQueryResult,
 } from "../queries/get-most-common-name";
-import { ResourcesType, StarWarsApi, StarWarsFilm, StarWarsPerson } from "../../../../shared/integrations/starwars-api";
+import {
+  ResourcesType,
+  StarWarsApi,
+  StarWarsFilm,
+  StarWarsPerson,
+} from "../../../../shared/integrations/starwars-api/starwars-api";
 import { WordsService } from "../../../../shared/services/words.service";
 import { CustomRedisClient } from "../../../../tools/cache-client";
 import { COUNTED_UNIQUE_WORDS } from "../../../../shared/utils/cache.utils";

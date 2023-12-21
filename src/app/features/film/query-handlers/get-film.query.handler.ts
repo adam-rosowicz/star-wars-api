@@ -1,6 +1,6 @@
 import { QueryHandler } from "@tshio/query-bus";
 import { GET_FILM_QUERY_TYPE, GetFilmQuery, GetFilmQueryResult } from "../queries/get-film";
-import { ResourcesType, StarWarsApi, StarWarsFilm } from "../../../../shared/integrations/starwars-api";
+import { ResourcesType, StarWarsApi, StarWarsFilm } from "../../../../shared/integrations/starwars-api/starwars-api";
 
 interface GetFilmQueryDependencies {
   starWarsApi: StarWarsApi;

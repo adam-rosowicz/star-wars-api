@@ -1,5 +1,5 @@
 import { QueryResult } from "@tshio/query-bus";
-import { StarWarsPlanet } from "../../../../../shared/integrations/starwars-api";
+import { StarWarsPlanet } from "../../../../../shared/integrations/starwars-api/starwars-api";
 
 interface GetPlanetsResult {
   items: StarWarsPlanet[];

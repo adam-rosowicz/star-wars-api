@@ -1,5 +1,5 @@
 import { QueryResult } from "@tshio/query-bus";
-import { StarWarsVehicle } from "../../../../../shared/integrations/starwars-api";
+import { StarWarsVehicle } from "../../../../../shared/integrations/starwars-api/starwars-api";
 
 interface GetVehiclesResult {
   items: StarWarsVehicle[];
