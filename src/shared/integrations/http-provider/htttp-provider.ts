@@ -51,15 +51,15 @@ export class HttpProvider {
   private setUpRequestLoggingInterceptors(client: HttpProviderInstance) {
     client.interceptors.request.use(
       (request) => {
-        // this.logger.info(
-        //   `[AXIOS] Request: ${JSON.stringify({
-        //     request: request.method?.toUpperCase(),
-        //     url: request.url,
-        //     params: request.params,
-        //     headers: request.headers,
-        //     data: request.data,
-        //   })}`,
-        // );
+        this.logger.info(
+          `[AXIOS] Request: ${JSON.stringify({
+            request: request.method?.toUpperCase(),
+            url: request.url,
+            params: request.params,
+            headers: request.headers,
+            data: request.data,
+          })}`,
+        );
         return request;
       },
       (error) => {
@@ -72,12 +72,12 @@ export class HttpProvider {
   private setUpResponseLoggingInterceptors(client: HttpProviderInstance) {
     client.interceptors.response.use(
       (response) => {
-        // this.logger.info(
-        //   `[AXIOS] Response: ${JSON.stringify({
-        //     response: response.status,
-        //     data: response.data,
-        //   })}`,
-        // );
+        this.logger.info(
+          `[AXIOS] Response: ${JSON.stringify({
+            response: response.status,
+            data: response.data,
+          })}`,
+        );
         return response;
       },
       (error) => {

@@ -1,9 +1,12 @@
 import { QueryHandler } from "@tshio/query-bus";
+import { Logger } from "@tshio/logger";
 import { GET_SPECIES_QUERY_TYPE, GetSpeciesQuery, GetSpeciesQueryResult } from "../queries/get-species";
-import { ResourcesType, StarWarsApi, StarWarsSpecie } from "../../../../shared/integrations/starwars-api/starwars-api";
+import { StarWarsApi } from "../../../../shared/integrations/starwars-api/starwars-api";
+import { StarWarsSpecie, ResourcesType } from "../../../../shared/types/starwars.types";
 
 interface GetSpeciesQueryDependencies {
   starWarsApi: StarWarsApi;
+  logger: Logger;
 }
 
 export default class GetSpeciesQueryHandler implements QueryHandler<GetSpeciesQuery, GetSpeciesQueryResult> {
@@ -13,12 +16,11 @@ export default class GetSpeciesQueryHandler implements QueryHandler<GetSpeciesQu
 
   async execute(query: GetSpeciesQuery): Promise<GetSpeciesQueryResult> {
     const { filter, page } = query.payload;
+    const { logger, starWarsApi } = this.dependencies;
 
-    const species = await this.dependencies.starWarsApi.getResources<StarWarsSpecie>(
-      ResourcesType.Species,
-      filter,
-      page,
-    );
+    logger.info("Query GetSpecies executed");
+
+    const species = await starWarsApi.getResources<StarWarsSpecie>(ResourcesType.Species, filter, page);
 
     const resultSpecies = species.map((specie) => {
       return {

@@ -1,9 +1,12 @@
 import { QueryHandler } from "@tshio/query-bus";
+import { Logger } from "@tshio/logger";
 import { GET_FILM_QUERY_TYPE, GetFilmQuery, GetFilmQueryResult } from "../queries/get-film";
-import { ResourcesType, StarWarsApi, StarWarsFilm } from "../../../../shared/integrations/starwars-api/starwars-api";
+import { StarWarsApi } from "../../../../shared/integrations/starwars-api/starwars-api";
+import { StarWarsFilm, ResourcesType } from "../../../../shared/types/starwars.types";
 
 interface GetFilmQueryDependencies {
   starWarsApi: StarWarsApi;
+  logger: Logger;
 }
 export default class GetFilmQueryHandler implements QueryHandler<GetFilmQuery, GetFilmQueryResult> {
   public queryType: string = GET_FILM_QUERY_TYPE;
@@ -12,7 +15,11 @@ export default class GetFilmQueryHandler implements QueryHandler<GetFilmQuery, G
 
   async execute(query: GetFilmQuery): Promise<GetFilmQueryResult> {
     const { id } = query.payload;
-    const film = await this.dependencies.starWarsApi.getResource<StarWarsFilm>(ResourcesType.Films, id);
+    const { starWarsApi, logger } = this.dependencies;
+
+    logger.info("Query GetFilm executed");
+
+    const film = await starWarsApi.getResource<StarWarsFilm>(ResourcesType.Films, id);
 
     if (!film) {
       return new GetFilmQueryResult(null);

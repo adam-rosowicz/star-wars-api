@@ -1,9 +1,12 @@
 import { QueryHandler } from "@tshio/query-bus";
+import { Logger } from "@tshio/logger";
 import { GET_VEHICLE_QUERY_TYPE, GetVehicleQuery, GetVehicleQueryResult } from "../queries/get-vehicle";
-import { StarWarsApi, StarWarsVehicle, ResourcesType } from "../../../../shared/integrations/starwars-api/starwars-api";
+import { StarWarsApi } from "../../../../shared/integrations/starwars-api/starwars-api";
+import { StarWarsVehicle, ResourcesType } from "../../../../shared/types/starwars.types";
 
 interface GetVehicleQueryDependencies {
   starWarsApi: StarWarsApi;
+  logger: Logger;
 }
 
 export default class GetVehicleQueryHandler implements QueryHandler<GetVehicleQuery, GetVehicleQueryResult> {
@@ -13,8 +16,11 @@ export default class GetVehicleQueryHandler implements QueryHandler<GetVehicleQu
 
   async execute(query: GetVehicleQuery): Promise<GetVehicleQueryResult> {
     const { id } = query.payload;
+    const { logger, starWarsApi } = this.dependencies;
 
-    const vehicle = await this.dependencies.starWarsApi.getResource<StarWarsVehicle>(ResourcesType.Vehicles, id);
+    logger.info("Query GetVehicle executed");
+
+    const vehicle = await starWarsApi.getResource<StarWarsVehicle>(ResourcesType.Vehicles, id);
 
     if (!vehicle) {
       return new GetVehicleQueryResult(null);

@@ -1,4 +1,5 @@
 import { QueryHandler } from "@tshio/query-bus";
+import { Logger } from "@tshio/logger";
 import {
   GET_UNIQUE_WORDS_QUERY_TYPE,
   GetUniqueWordsQuery,
@@ -11,6 +12,7 @@ import { CACHE_TIME_TO_LIVE, COUNTED_UNIQUE_WORDS } from "../../../../shared/uti
 interface GetUniqueWordsQueryHandlerDependencies {
   wordsService: WordsService;
   redisClient: CustomRedisClient;
+  logger: Logger;
 }
 
 export default class GetUniqueWordsQueryHandler
@@ -22,7 +24,9 @@ export default class GetUniqueWordsQueryHandler
 
   async execute(query: GetUniqueWordsQuery): Promise<GetUniqueWordsQueryResult> {
     const { openingCrawls } = query.payload;
-    const { wordsService, redisClient } = this.dependencies;
+    const { wordsService, redisClient, logger } = this.dependencies;
+
+    logger.info("Query GetUniqueWords executed");
 
     const countedWords = wordsService.getUniqueWordsWithCountFromTexts(openingCrawls);
 

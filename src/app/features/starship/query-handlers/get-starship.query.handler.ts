@@ -1,13 +1,12 @@
 import { QueryHandler } from "@tshio/query-bus";
+import { Logger } from "@tshio/logger";
 import { GET_STARSHIP_QUERY_TYPE, GetStarshipQuery, GetStarshipQueryResult } from "../queries/get-starship";
-import {
-  ResourcesType,
-  StarWarsApi,
-  StarWarsStarship,
-} from "../../../../shared/integrations/starwars-api/starwars-api";
+import { StarWarsApi } from "../../../../shared/integrations/starwars-api/starwars-api";
+import { StarWarsStarship, ResourcesType } from "../../../../shared/types/starwars.types";
 
 interface GetStarshipQueryDependencies {
   starWarsApi: StarWarsApi;
+  logger: Logger;
 }
 export default class GetStarshipQueryHandler implements QueryHandler<GetStarshipQuery, GetStarshipQueryResult> {
   public queryType: string = GET_STARSHIP_QUERY_TYPE;
@@ -16,8 +15,11 @@ export default class GetStarshipQueryHandler implements QueryHandler<GetStarship
 
   async execute(query: GetStarshipQuery): Promise<GetStarshipQueryResult> {
     const { id } = query.payload;
+    const { logger, starWarsApi } = this.dependencies;
 
-    const starship = await this.dependencies.starWarsApi.getResource<StarWarsStarship>(ResourcesType.Starships, id);
+    logger.info("Query GetStarship executed");
+
+    const starship = await starWarsApi.getResource<StarWarsStarship>(ResourcesType.Starships, id);
 
     if (!starship) {
       return new GetStarshipQueryResult(null);

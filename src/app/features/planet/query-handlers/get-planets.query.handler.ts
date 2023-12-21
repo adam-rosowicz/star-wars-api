@@ -1,9 +1,12 @@
 import { QueryHandler } from "@tshio/query-bus";
+import { Logger } from "@tshio/logger";
 import { GET_PLANETS_QUERY_TYPE, GetPlanetsQuery, GetPlanetsQueryResult } from "../queries/get-planets";
-import { ResourcesType, StarWarsApi, StarWarsPlanet } from "../../../../shared/integrations/starwars-api/starwars-api";
+import { StarWarsApi } from "../../../../shared/integrations/starwars-api/starwars-api";
+import { StarWarsPlanet, ResourcesType } from "../../../../shared/types/starwars.types";
 
 interface GetPlanetsQueryDependencies {
   starWarsApi: StarWarsApi;
+  logger: Logger;
 }
 
 export default class GetPlanetsQueryHandler implements QueryHandler<GetPlanetsQuery, GetPlanetsQueryResult> {
@@ -13,11 +16,11 @@ export default class GetPlanetsQueryHandler implements QueryHandler<GetPlanetsQu
 
   async execute(query: GetPlanetsQuery): Promise<GetPlanetsQueryResult> {
     const { filter, page } = query.payload;
-    const planets = await this.dependencies.starWarsApi.getResources<StarWarsPlanet>(
-      ResourcesType.Planets,
-      filter,
-      page,
-    );
+    const { logger, starWarsApi } = this.dependencies;
+
+    logger.info("Query GetPlanets executed");
+
+    const planets = await starWarsApi.getResources<StarWarsPlanet>(ResourcesType.Planets, filter, page);
 
     const resultPlanets = planets.map((planet) => {
       return {
